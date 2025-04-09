@@ -1,6 +1,8 @@
 import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants"
 import { Metadata } from "next"
 import Loading from "../loading"
+import ProductList from "@/components/shared/product/product-list"
+import sampleData from "@/db/sample-data"
 
 export const metadata: Metadata = {
 	title: "Home",
@@ -8,9 +10,10 @@ export const metadata: Metadata = {
 
 const HomePage = () => {
 	return (
-		<>
-			<h1 className="text-black">Prostore</h1>
-		</>
+		<div className="space-y-8">
+			<h2 className="h2-bold">Latest Products</h2>
+			<ProductList title="Newest Arrivals" data={sampleData.products} limit={6} />
+		</div>
 	)
 }
 export default HomePage
