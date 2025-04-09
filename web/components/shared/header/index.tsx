@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { logo } from "../../../app/assets/index"
 import ModeToggle from "./mode-toggle"
+import HeaderMenu from "./header-menu"
 
 const Header = () => {
 	return (
@@ -23,21 +24,7 @@ const Header = () => {
 						<span className="hidden lg:block font-bold text-2xl ml-3">{APP_NAME}</span>
 					</Link>
 				</div>
-				<div className="space-x-2">
-					<ModeToggle />
-					<Button asChild variant="ghost">
-						<Link href="/cart">
-							<ShoppingCart />
-							Cart
-						</Link>
-					</Button>
-					<Button asChild>
-						<Link href="/sign-in">
-							<UserIcon />
-							Sign In
-						</Link>
-					</Button>
-				</div>
+				<HeaderMenu />
 			</div>
 		</header>
 	)
