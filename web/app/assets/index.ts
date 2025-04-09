@@ -1,4 +1,6 @@
 import loader from "./loader.gif"
+import loader02 from "./loader-02.gif"
+import loader03 from "./loader-03.gif"
 import banner01 from "./images/banner-1.jpg"
 import banner02 from "./images/banner-2.jpg"
 import logo from "./images/logo.svg"
@@ -34,4 +36,6 @@ export {
 	p52,
 	p61,
 	p62,
+	loader03,
+	loader02,
 }
