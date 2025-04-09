@@ -1,22 +1,7 @@
 import { p11, p12, p21, p22, p31, p32, p41, p42, p51, p52, p61, p62 } from "@/app/assets"
 import { randomUUID } from "crypto"
-import { StaticImageData } from "next/image"
 
-export type Product = {
-	id?: string
-	name: string
-	slug: string
-	category: string
-	description: string
-	images: (string | StaticImageData)[]
-	price: number
-	brand: string
-	rating: number
-	numReviews: number
-	stock: number
-	isFeatured: boolean
-	banner?: string | null
-}
+import { Product } from "@core"
 
 export type ProductProps = {
 	products: Product[]
@@ -30,7 +15,7 @@ const sampleData: ProductProps = {
 			slug: "polo-sporting-stretch-shirt",
 			category: "Men's Dress Shirts",
 			description: "Classic Polo style with modern comfort",
-			images: [p11, p12],
+			images: [p11.src, p12.src],
 			price: 59.99,
 			brand: "Polo",
 			rating: 4.5,
@@ -45,7 +30,7 @@ const sampleData: ProductProps = {
 			slug: "brooks-brothers-long-sleeved-shirt",
 			category: "Men's Dress Shirts",
 			description: "Timeless style and premium comfort",
-			images: [p21, p22],
+			images: [p21.src, p22.src],
 			price: 85.9,
 			brand: "Brooks Brothers",
 			rating: 4.2,
@@ -60,7 +45,7 @@ const sampleData: ProductProps = {
 			slug: "tommy-hilfiger-classic-fit-dress-shirt",
 			category: "Men's Dress Shirts",
 			description: "A perfect blend of sophistication and comfort",
-			images: [p31, p32],
+			images: [p31.src, p32.src],
 			price: 99.95,
 			brand: "Tommy Hilfiger",
 			rating: 4.9,
@@ -75,7 +60,7 @@ const sampleData: ProductProps = {
 			slug: "calvin-klein-slim-fit-stretch-shirt",
 			category: "Men's Dress Shirts",
 			description: "Streamlined design with flexible stretch fabric",
-			images: [p41, p42],
+			images: [p41.src, p42.src],
 			price: 39.95,
 			brand: "Calvin Klein",
 			rating: 3.6,
@@ -90,7 +75,7 @@ const sampleData: ProductProps = {
 			slug: "polo-ralph-lauren-oxford-shirt",
 			category: "Men's Dress Shirts",
 			description: "Iconic Polo design with refined oxford fabric",
-			images: [p51, p52],
+			images: [p51.src, p52.src],
 			price: 79.99,
 			brand: "Polo",
 			rating: 4.7,
@@ -105,7 +90,7 @@ const sampleData: ProductProps = {
 			slug: "polo-classic-pink-hoodie",
 			category: "Men's Sweatshirts",
 			description: "Soft, stylish, and perfect for laid-back days",
-			images: [p61, p62],
+			images: [p61.src, p62.src],
 			price: 99.99,
 			brand: "Polo",
 			rating: 4.6,
