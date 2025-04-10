@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client';
 import { config } from 'dotenv';
 import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 
 import { envSchema } from '../infrastructure/env/env';
 import { DomainEvents } from '../../../../core/src/shared/infrastructure/events/domain-events';
+import { PrismaClient } from '@prisma/client';
 
 config({ path: '.env', override: true });
 config({ path: '.env.test', override: true });

@@ -1,5 +1,5 @@
 import { ProductEntity } from "../../anterprise/entity/product"
-export class CategoryPresenter {
+export class ProductPresenter {
 	static toHTTP(product: ProductEntity) {
 		return {
 			id: product.id.toString(),

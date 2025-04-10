@@ -1,4 +1,5 @@
 export * from "./application"
+export * from "./infrastructure"
 export * from "./shared/application"
 export * from "./shared/enterprise"
 export * from "./shared/infrastructure"
