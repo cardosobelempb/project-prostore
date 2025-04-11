@@ -1,4 +1,3 @@
-// import { Product } from "@core"
 import { Product } from "@/lib/types/product.type"
 import ProductCard from "./product-card"
 

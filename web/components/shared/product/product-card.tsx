@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
+import { Product } from "@/lib/types/product.type"
 import Image from "next/image"
 import Link from "next/link"
 import ProductPrice from "./product-price"
-import { Product } from "@/lib/types/product.type"
 
 type ProductCardProps = {
 	product: Product.Props

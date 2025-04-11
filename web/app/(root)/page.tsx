@@ -8,10 +8,7 @@ export const metadata: Metadata = {
 }
 
 const HomePage = async () => {
-	const latesProducts = (await getLatestProducts()).map((product) => ({
-		...product,
-		price: product.price.toString(),
-	}))
+	const latesProducts = await getLatestProducts()
 
 	return (
 		<div className="space-y-8">
