@@ -3,7 +3,7 @@
 import { APP_NAME } from "@/lib/constants"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { logo } from "./assets"
+import { logo } from "../public/assets"
 
 const NotFound = () => {
 	return (

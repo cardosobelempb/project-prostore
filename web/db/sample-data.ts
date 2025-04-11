@@ -1,10 +1,10 @@
-import { p11, p12, p21, p22, p31, p32, p41, p42, p51, p52, p61, p62 } from "@/app/assets"
+import { p11, p12, p21, p22, p31, p32, p41, p42, p51, p52, p61, p62 } from "@/public/assets"
 import { randomUUID } from "crypto"
 
 import { Product } from "@core"
 
 export type ProductProps = {
-	products: Product[]
+	products: Product.Props[]
 }
 
 const sampleData: ProductProps = {
@@ -23,6 +23,8 @@ const sampleData: ProductProps = {
 			stock: 5,
 			isFeatured: true,
 			banner: "banner-1.jpg",
+			isActive: true,
+			createdAt: new Date(),
 		},
 		{
 			id: randomUUID(),
@@ -38,6 +40,8 @@ const sampleData: ProductProps = {
 			stock: 10,
 			isFeatured: true,
 			banner: "banner-2.jpg",
+			isActive: true,
+			createdAt: new Date(),
 		},
 		{
 			id: randomUUID(),
@@ -53,6 +57,8 @@ const sampleData: ProductProps = {
 			stock: 0,
 			isFeatured: false,
 			banner: null,
+			isActive: true,
+			createdAt: new Date(),
 		},
 		{
 			id: randomUUID(),
@@ -68,6 +74,8 @@ const sampleData: ProductProps = {
 			stock: 10,
 			isFeatured: false,
 			banner: null,
+			isActive: true,
+			createdAt: new Date(),
 		},
 		{
 			id: randomUUID(),
@@ -83,6 +91,8 @@ const sampleData: ProductProps = {
 			stock: 6,
 			isFeatured: false,
 			banner: null,
+			isActive: true,
+			createdAt: new Date(),
 		},
 		{
 			id: randomUUID(),
@@ -98,6 +108,8 @@ const sampleData: ProductProps = {
 			stock: 8,
 			isFeatured: true,
 			banner: null,
+			isActive: true,
+			createdAt: new Date(),
 		},
 	],
 }

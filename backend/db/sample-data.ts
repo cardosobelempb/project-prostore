@@ -1,12 +1,6 @@
 import { randomUUID } from 'crypto';
 
-import { Product } from '@core';
-
-export type ProductProps = {
-  products: Product.Props[];
-};
-
-const sampleData: ProductProps = {
+const sampleData = {
   products: [
     {
       id: randomUUID(),
@@ -14,7 +8,10 @@ const sampleData: ProductProps = {
       slug: 'polo-sporting-stretch-shirt',
       category: "Men's Dress Shirts",
       description: 'Classic Polo style with modern comfort',
-      images: ['p11', 'p12'],
+      images: [
+        '/assets/images/sample-products/p1-1.jpg',
+        '/assets/images/sample-products/p1-2.jpg',
+      ],
       price: 59.99,
       brand: 'Polo',
       rating: 4.5,
@@ -31,7 +28,10 @@ const sampleData: ProductProps = {
       slug: 'brooks-brothers-long-sleeved-shirt',
       category: "Men's Dress Shirts",
       description: 'Timeless style and premium comfort',
-      images: ['p21', 'p22'],
+      images: [
+        '/assets/images/sample-products/p2-1.jpg',
+        '/assets/images/sample-products/p2-2.jpg',
+      ],
       price: 85.9,
       brand: 'Brooks Brothers',
       rating: 4.2,
@@ -48,7 +48,10 @@ const sampleData: ProductProps = {
       slug: 'tommy-hilfiger-classic-fit-dress-shirt',
       category: "Men's Dress Shirts",
       description: 'A perfect blend of sophistication and comfort',
-      images: ['p31', 'p32'],
+      images: [
+        '/assets/images/sample-products/p3-1.jpg',
+        '/assets/images/sample-products/p3-2.jpg',
+      ],
       price: 99.95,
       brand: 'Tommy Hilfiger',
       rating: 4.9,
@@ -65,7 +68,10 @@ const sampleData: ProductProps = {
       slug: 'calvin-klein-slim-fit-stretch-shirt',
       category: "Men's Dress Shirts",
       description: 'Streamlined design with flexible stretch fabric',
-      images: ['p41', 'p42'],
+      images: [
+        '/assets/images/sample-products/p4-1.jpg',
+        '/assets/images/sample-products/p4-2.jpg',
+      ],
       price: 39.95,
       brand: 'Calvin Klein',
       rating: 3.6,
@@ -82,7 +88,10 @@ const sampleData: ProductProps = {
       slug: 'polo-ralph-lauren-oxford-shirt',
       category: "Men's Dress Shirts",
       description: 'Iconic Polo design with refined oxford fabric',
-      images: ['p51', 'p52'],
+      images: [
+        '/assets/images/sample-products/p5-1.jpg',
+        '/assets/images/sample-products/p5-2.jpg',
+      ],
       price: 79.99,
       brand: 'Polo',
       rating: 4.7,
@@ -99,7 +108,10 @@ const sampleData: ProductProps = {
       slug: 'polo-classic-pink-hoodie',
       category: "Men's Sweatshirts",
       description: 'Soft, stylish, and perfect for laid-back days',
-      images: ['p61', 'p62'],
+      images: [
+        '/assets/images/sample-products/p6-1.jpg',
+        '/assets/images/sample-products/p6-2.jpg',
+      ],
       price: 99.99,
       brand: 'Polo',
       rating: 4.6,

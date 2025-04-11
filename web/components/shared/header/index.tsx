@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ShoppingBasket } from "lucide-react"
 
 import HeaderMenu from "./header-menu"
-import { logo } from "@/app/assets"
+import { logo } from "@/public/assets"
 
 const Header = () => {
 	return (
