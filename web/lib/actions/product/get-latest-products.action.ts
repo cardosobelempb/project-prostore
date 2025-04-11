@@ -1,8 +1,7 @@
 "use server"
 
+import { LATEST_PRODUCTS_LIMIT } from "@/lib/constants"
 import { PrismaClient } from "@prisma/client"
-import { convertToPlainObject } from "@core"
-import { LATEST_PRODUCTS_LIMIT } from "../constants"
 
 // get latest products
 export async function getLatestProducts() {

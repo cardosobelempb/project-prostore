@@ -2,7 +2,13 @@
 import { Product } from "@/lib/types/product.type"
 import ProductCard from "./product-card"
 
-const ProductList = ({ products, title, limit }: Product.Request) => {
+export type ProductListProps = {
+	products: Product.Props[]
+	title?: string
+	limit?: number
+}
+
+const ProductList = ({ products, title, limit }: ProductListProps) => {
 	const limitedData = limit ? products?.slice(0, limit) : products
 	return (
 		<div className="my-10">

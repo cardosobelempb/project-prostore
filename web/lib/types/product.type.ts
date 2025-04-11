@@ -1,28 +1,14 @@
 import { Prisma } from "@prisma/client"
+import z from "zod"
+import { ProductValidator } from "@/lib/validators/product.validator"
 
 export namespace Product {
-	export type Props = {
+	export type Props = z.infer<typeof ProductValidator.create> & {
 		id?: string
-		name: string
-		slug: string
-		category: string
-		description: string
-		images: string[]
-		price: Prisma.Decimal
-		brand: string
 		rating: Prisma.Decimal
 		numReviews: number
-		stock: number
-		isFeatured: boolean
-		banner?: string | null
 		isActive: boolean
 		createdAt: Date
 		updatedAt?: Date | null
-	}
-
-	export type Request = {
-		products: Props[]
-		title?: string
-		limit?: number
 	}
 }

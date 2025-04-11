@@ -1,5 +1,6 @@
 import ProductList from "@/components/shared/product/product-list"
-import { getLatestProducts } from "@/lib/actions/product.actions"
+import { getLatestProducts } from "@/lib/actions/product/get-latest-products.action"
+
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -7,8 +8,11 @@ export const metadata: Metadata = {
 }
 
 const HomePage = async () => {
-	const latesProducts = await getLatestProducts()
-	console.log(latesProducts)
+	const latesProducts = (await getLatestProducts()).map((product) => ({
+		...product,
+		price: product.price.toString(),
+	}))
+
 	return (
 		<div className="space-y-8">
 			<h2 className="h2-bold">Latest Products</h2>
