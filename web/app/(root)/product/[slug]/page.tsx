@@ -1,3 +1,4 @@
+import ProductImages from "@/components/shared/product/product-images"
 import ProductPrice from "@/components/shared/product/product-price"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -14,13 +15,12 @@ const ProductDetailsPage: React.FC<ProductDetailsPageProps> = async ({ params })
 	const product = await getProductBySlug(slug)
 	if (!product) notFound()
 
-	console.log(product.name)
 	return (
 		<>
 			<section>
 				<div className="grid grid-cols1 md:grid-cols-5">
 					<div className="col-span-2">
-						<h1>Image</h1>
+						<ProductImages images={product.images} />
 					</div>
 					<div className="col-span-2 p-5">
 						<div className="flex flex-col gap-6">
