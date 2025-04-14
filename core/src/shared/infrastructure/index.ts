@@ -5,13 +5,13 @@ import { DomainEvents } from "./events/domain-events"
 import { EventHandler } from "./events/event-handler"
 import { Either, left, right } from "./handle-erros/either"
 
-export type {
-	ControllerError,
+export {
+	type ControllerError,
 	DomainEvents,
-	Either,
+	type Either,
 	left,
 	right,
 	WrongCreadentialsErro,
-	DomainEvent,
-	EventHandler,
+	type DomainEvent,
+	type EventHandler,
 }
