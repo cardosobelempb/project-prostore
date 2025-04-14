@@ -1,3 +1,3 @@
 import { ProductEntity } from "./entity/product"
 
-export { ProductEntity }
+export type { ProductEntity }
