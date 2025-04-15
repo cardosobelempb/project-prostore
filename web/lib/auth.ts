@@ -4,7 +4,7 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import prisma from "./db/prisma"
+import prisma from "../db/prisma"
 
 export const config = {
 	pages: {
