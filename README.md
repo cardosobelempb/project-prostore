@@ -1,68 +1,84 @@
-## start
+# Turborepo starter
 
+This Turborepo starter is maintained by the Turborepo core team.
 
-## initial
+## Using this example
 
-- nest new 05-nest-clear
+Run the following command:
 
-## Eslint
+```sh
+npx create-turbo@latest
+```
 
-- npm i eslint @rocketseat/eslint-config -D
-  .eslintrc.json
-  {
-  "extends": "@rocketseat/eslint-config/node",
-  "no-useless-controller": "off"
-  }
+## What's inside?
 
-## Dep
+This Turborepo includes the following packages/apps:
 
-- npm i @nestjs/config
-- npm i bcryptjs
-- npm i @types/bcryptjs -D
-- npm i dotenv -D
+### Apps and Packages
 
-## JWT
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-- npm i @nestjs/jwt
-- npm i @nestjs/passport
-- npm i passport-jwt
-- npm i @types/passport-jwt -D
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-## Validation
+### Utilities
 
-- npm i zod
-- npm i zod-validation-error
+This Turborepo has some additional tools already setup for you:
 
-## Docker
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
 
-- docker-compose up -d
+### Build
 
-## Prisma
+To build all apps and packages, run the following command:
 
-- npm i prisma -D
-- npm i @prisma/client
-- npx prisma init
-- npx prisma migrate dev
+```
+cd my-turborepo
+pnpm build
+```
 
-## KEY
+### Develop
 
-### private
+To develop all apps and packages, run the following command:
 
-- openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
-- certutil -encode private_key.pem private_key.txt
+```
+cd my-turborepo
+pnpm dev
+```
 
-### public
+### Remote Caching
 
-- openssl rsa -pubout -in private_key.pem -out public_key.pub
-- certutil -encode public_key.pub public_key.txt
+> [!TIP]
+> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
 
-## Vitest test
+Turborepo can use a technique known as [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-- npm i vitest -D
-- npm i unplugin-swc -D
-- npm i @swc/core -D
-- npm i @vitest/coverage-v8 -D
-- npm i vite-tsconfig-paths -D
-- npm i supertest -D
-- npm i @types/supertest -D
-- npm i @faker-js/faker -D
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+
+```
+cd my-turborepo
+npx turbo login
+```
+
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+
+```
+npx turbo link
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turbo.build/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/docs/core-concepts/monorepos/filtering)
+- [Configuration Options](https://turbo.build/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/docs/reference/command-line-reference)
