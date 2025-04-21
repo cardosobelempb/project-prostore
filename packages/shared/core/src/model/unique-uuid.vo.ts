@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 
-export class UniqueEntityUUID {
+export class UniqueUUID {
   private value: string;
 
   constructor(value?: string) {
@@ -15,7 +15,7 @@ export class UniqueEntityUUID {
     return this.value;
   }
 
-  public equals(id: UniqueEntityUUID) {
+  public equals(id: UniqueUUID) {
     return id.toValue() === this.value;
   }
 }

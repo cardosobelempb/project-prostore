@@ -1,4 +1,5 @@
-export const products = [
+import { IProduct } from '@product/core';
+export const products: IProduct.IPROPS[] = [
   {
     name: 'Polo Sporting Stretch Shirt',
     slug: 'polo-sporting-stretch-shirt',

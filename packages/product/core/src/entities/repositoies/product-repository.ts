@@ -1,4 +1,4 @@
 import { IRepository } from "@shared/core";
-import { Product } from "../product.entity";
+import { IProduct } from "../product.interface";
 
-export interface IProductRepository extends IRepository<Product.IPROPS> {}
+export interface IProductRepository extends IRepository<IProduct.IPROPS> {}
