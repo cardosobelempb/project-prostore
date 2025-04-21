@@ -1,4 +1,4 @@
-import { UniqueUUID } from "../../dist";
+import { UniqueUUID } from "./unique-uuid.vo";
 
 export abstract class Entity<Props> {
   private _id: UniqueUUID;

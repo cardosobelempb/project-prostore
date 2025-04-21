@@ -13,12 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Roles {
+  ADMIN
+  CLIENT
+}
+
 model User {
   id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String    @default("NO_NAME")
   email         String    @unique(map: "user_email_idx")
   password      String?
-  role          String    @default("user")
+  role          Roles     @default(CLIENT)
   emailVerified DateTime? @map("email_verified") @db.Timestamp(6)
   image         String?
   address       Json?     @db.Json

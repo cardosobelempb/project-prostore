@@ -1,14 +1,20 @@
+import { Email, PersonName, HashPassword } from "@shared/core";
 export namespace IUser {
+  export enum IRoles {
+    ADMIN = "ADMIN",
+    CLIENT = "CLIENT",
+  }
   export interface IProps {
-    id: string;
-    name: string;
-    email: string;
-    password: string;
-    role?: string;
-    emailVerified?: Date;
+    name: PersonName;
+    email: Email;
+    password: HashPassword;
+    role?: IRoles;
+    emailVerified?: Date | null;
     image?: string;
     address?: string;
     paymentMethod?: string;
+    createdAt: Date;
+    updatedAt?: Date | null;
   }
 
   export interface ICreateUser extends IProps {
