@@ -4,7 +4,32 @@ export class Result {
     readonly errors: string[] = []
   ) {}
 
-  get ok(): boolean {
+  static ok(value: any): Result {
+    return new Result(value);
+  }
+
+  static fail(errors: string[]): Result {
+    return new Result(undefined, errors);
+  }
+
+  static try(fn: () => any): Result {
+    try {
+      return Result.ok(fn());
+    } catch (error) {
+      if (error instanceof Error) {
+        return Result.fail([error.message]);
+      }
+      console.error("Unexpected error:", error);
+      return Result.fail(["Unexpected error occurred"]);
+    }
+  }
+
+  static combine(results: Result[]): Result {
+    const errors = results.flatMap((result) => result.errors);
+    return errors.length > 0 ? Result.fail(errors) : Result.ok(undefined);
+  }
+
+  get success(): boolean {
     return this.errors.length === 0;
   }
 
@@ -12,33 +37,10 @@ export class Result {
     return this.errors.length > 0;
   }
 
-  static try(fn: () => any): Result {
-    try {
-      return new Result(fn());
-    } catch (error) {
-      return new Result(null, [
-        error instanceof Error ? error.message : "Unknown error",
-      ]);
+  thowIfError(): any {
+    if (this.failure) {
+      throw new Error(this.errors.join(", "));
     }
+    return this.value;
   }
-
-  static combine(results: Result[]): Result {
-    const errors = results.flatMap((result) => result.errors);
-    return new Result(null, errors);
-  }
-
-  //   static combine(results: Result[]): Result {
-  //     const errors: string[] = [];
-  //     const values: any[] = [];
-
-  //     for (const result of results) {
-  //       if (result.failure) {
-  //         errors.push(...result.errors);
-  //       } else {
-  //         values.push(result.value);
-  //       }
-  //     }
-
-  //     return new Result(values, errors);
-  //   }
 }

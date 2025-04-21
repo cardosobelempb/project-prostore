@@ -1,12 +1,5 @@
+import { Entity, Optional, UniqueUUID } from "@shared/core";
 import { IUser } from "./user.interface";
-import {
-  Entity,
-  Optional,
-  UniqueUUID,
-  Email,
-  PersonName,
-  HashPassword,
-} from "@shared/core";
 
 export class User extends Entity<IUser.IProps> {
   public get name() {
@@ -53,6 +46,7 @@ export class User extends Entity<IUser.IProps> {
   }
 }
 
+/*
 const user = User.create({
   name: new PersonName("John Doe"),
   email: new Email("john@email.com"),
@@ -65,3 +59,4 @@ const user = User.create({
 
 console.log(user);
 console.log(user.name.value);
+*/

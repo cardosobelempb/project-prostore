@@ -12,7 +12,7 @@ export async function getLatestProducts() {
     orderBy: { createdAt: "desc" },
   });
 
-  console.log(data);
+  // console.log(data);
 
   return convertToPlainObject(data);
 }

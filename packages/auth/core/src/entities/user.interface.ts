@@ -3,6 +3,7 @@ export namespace IUser {
   export enum IRoles {
     ADMIN = "ADMIN",
     CLIENT = "CLIENT",
+    USER = "USER",
   }
   export interface IProps {
     name: PersonName;
