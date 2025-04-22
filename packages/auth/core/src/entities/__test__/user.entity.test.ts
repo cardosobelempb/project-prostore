@@ -1,16 +1,18 @@
-import { Email, HashPassword, PersonName } from "@shared/core";
-import { User } from "../user.entity";
-import { IUser } from "../user.interface";
+import { PersonName } from '@shared/core'
+import { userFactory } from '../user.factory'
+import { User } from '../user.entity'
 
-test("Deve retornar um user valid", () => {
-  const user = User.create({
-    name: new PersonName("Lucas"),
-    email: new Email("lucas@gmail.com"),
-    password: new HashPassword(
-      "$2a$12$T3ObT0q.pxZ1PXL7l6YOy.BygRM0HBogIPpQOgjHoqM8vrrt9h46W"
-    ),
-    role: IUser.IRoles.USER,
-  });
-  console.log(user);
-  expect(user).toBeInstanceOf(User);
-});
+describe('Must return a valid user', () => {
+  let sut = userFactory()
+  it('should create a user with valid data', () => {
+    expect(sut).toBeInstanceOf(User)
+  })
+
+  it('should throw an error if the name is invalid', () => {
+    expect(() => {
+      userFactory({
+        name: new PersonName(''),
+      })
+    }).toThrow('person-name.is-empty')
+  })
+})
