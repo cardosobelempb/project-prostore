@@ -1,4 +1,3 @@
-import { ExceptionConstants } from './exception-constants'
 import {
   DataIntegrityViolationException,
   EntityNotFoundException,
@@ -6,6 +5,7 @@ import {
   IllegalArgumentException,
   ResourceNotFoundException,
   UnauthorizedException,
+  ExceptionConstants,
 } from './exceptions'
 import { FieldMessage } from './field-message.error'
 import { StandardError } from './standard-error.error'
@@ -21,5 +21,5 @@ export {
   StandardError,
   UnauthorizedException,
   ValidationError,
+  ExceptionConstants,
 }
-export type { ExceptionConstants }

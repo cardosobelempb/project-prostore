@@ -5,6 +5,7 @@ import { EntityNotFoundException } from './entity-not-found.exception'
 import { ForbiddenException } from './forbidden.exception'
 import { ResourceNotFoundException } from './resource-not-found.exception'
 import { MethodArgumentNotValidException } from './method-argument-not-valid.exception'
+import { ExceptionConstants } from './exception-constants.exception'
 
 export {
   IllegalArgumentException,
@@ -14,4 +15,5 @@ export {
   ForbiddenException,
   ResourceNotFoundException,
   MethodArgumentNotValidException,
+  ExceptionConstants,
 }
