@@ -1,4 +1,4 @@
-export class ResourceNotFoundException extends Error {
+export class EntityNotFoundException extends Error {
   constructor(message: string) {
     super(message)
   }
