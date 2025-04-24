@@ -1,4 +1,4 @@
-export class IllegalArgumentException extends Error {
+export class ConflictError extends Error {
   constructor(message: string) {
     super(message)
   }

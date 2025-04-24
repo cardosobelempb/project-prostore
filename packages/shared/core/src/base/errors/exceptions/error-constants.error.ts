@@ -1,4 +1,4 @@
-export class ExceptionConstants {
+export class ErrorConstants {
   private constructor() {}
 
   static readonly ENTITY_NOT_FOUND: string = '.Entity not found '

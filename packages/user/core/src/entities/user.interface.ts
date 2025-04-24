@@ -2,7 +2,7 @@ import {
   Email,
   PersonName,
   HashPassword,
-  EntityNotFoundException,
+  NotFoundError,
   Either,
 } from '@shared/core'
 export namespace IUser {
@@ -47,7 +47,7 @@ export namespace IUser {
   }
 
   export type Response = Either<
-    EntityNotFoundException,
+    NotFoundError,
     {
       user: IProps
     }

@@ -1,25 +1,31 @@
 import {
-  DataIntegrityViolationException,
-  EntityNotFoundException,
-  ForbiddenException,
-  IllegalArgumentException,
-  ResourceNotFoundException,
-  UnauthorizedException,
-  ExceptionConstants,
+  DataIntegrityViolationError,
+  ErrorConstants,
+  ForbiddenError,
+  IllegalArgumentError,
+  MethodArgumentNotValidError,
+  NotFoundError,
+  ResourceNotFoundError,
+  UnauthorizedError,
+  BadRequestError,
+  ConflictError,
 } from './exceptions'
 import { FieldMessage } from './field-message.error'
 import { StandardError } from './standard-error.error'
 import { ValidationError } from './validation-error.error'
 
 export {
-  DataIntegrityViolationException,
-  EntityNotFoundException,
+  DataIntegrityViolationError,
+  ErrorConstants,
   FieldMessage,
-  ForbiddenException,
-  IllegalArgumentException,
-  ResourceNotFoundException,
+  ForbiddenError,
+  IllegalArgumentError,
+  MethodArgumentNotValidError,
   StandardError,
-  UnauthorizedException,
+  NotFoundError,
   ValidationError,
-  ExceptionConstants,
+  ResourceNotFoundError,
+  BadRequestError,
+  UnauthorizedError,
+  ConflictError,
 }

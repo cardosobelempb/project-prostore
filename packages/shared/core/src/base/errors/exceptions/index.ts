@@ -1,19 +1,23 @@
-import { IllegalArgumentException } from './illegal-argument.exception'
-import { DataIntegrityViolationException } from './dataIntegrity-violation-exception'
-import { UnauthorizedException } from './unauthorized-exception'
-import { EntityNotFoundException } from './entity-not-found.exception'
-import { ForbiddenException } from './forbidden.exception'
-import { ResourceNotFoundException } from './resource-not-found.exception'
-import { MethodArgumentNotValidException } from './method-argument-not-valid.exception'
-import { ExceptionConstants } from './exception-constants.exception'
+import { BadRequestError } from './bad-request.error'
+import { ConflictError } from './conflict.error'
+import { DataIntegrityViolationError } from './dataIntegrity-violation.error'
+import { IllegalArgumentError } from './illegal-argument.error'
+import { UnauthorizedError } from './unauthorized-error'
+import { NotFoundError } from './not-found.error'
+import { ForbiddenError } from './forbidden.error'
+import { ResourceNotFoundError } from './resource-not-found.error'
+import { MethodArgumentNotValidError } from './method-argument-not-valid.error'
+import { ErrorConstants } from './error-constants.error'
 
 export {
-  IllegalArgumentException,
-  DataIntegrityViolationException,
-  UnauthorizedException,
-  EntityNotFoundException,
-  ForbiddenException,
-  ResourceNotFoundException,
-  MethodArgumentNotValidException,
-  ExceptionConstants,
+  DataIntegrityViolationError,
+  ErrorConstants,
+  ForbiddenError,
+  IllegalArgumentError,
+  NotFoundError,
+  MethodArgumentNotValidError,
+  ResourceNotFoundError,
+  UnauthorizedError,
+  BadRequestError,
+  ConflictError,
 }

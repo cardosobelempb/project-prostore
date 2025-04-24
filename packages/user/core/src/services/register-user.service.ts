@@ -1,14 +1,16 @@
-import { HashGenerator, HashPassword, IService } from '@shared/core'
+import { HashGenerator, HashPassword, IService, right } from '@shared/core'
 import { User } from '../entities/user.entity'
 import { IUser } from '../entities/user.interface'
 import { UserRepository } from '../repositories'
 
-export class RegisterUserService implements IService<IUser.Request, void> {
+export class RegisterUserService
+  implements IService<IUser.Request, IUser.Response>
+{
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hashGenerator: HashGenerator,
   ) {}
-  async execute(input: IUser.Request): Promise<void | null> {
+  async execute(input: IUser.Request): Promise<IUser.Response> {
     const { email, password, name } = input
     const userWithEmail = await this.userRepository.findByEmail(email.value)
     if (userWithEmail) {
@@ -22,5 +24,7 @@ export class RegisterUserService implements IService<IUser.Request, void> {
     })
 
     await this.userRepository.create(user)
+
+    return right({ user })
   }
 }

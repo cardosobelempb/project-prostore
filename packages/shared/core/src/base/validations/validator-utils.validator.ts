@@ -1,5 +1,5 @@
 import { FieldMessage } from '../errors'
-import { MethodArgumentNotValidException } from '../errors/exceptions'
+import { MethodArgumentNotValidError } from '../errors/exceptions'
 import { ValidErrors } from './valid-errors.validator'
 import { ValidationErrors } from './validation-errors.validator'
 import { ValidatorConstants } from './validator-constants.validator'
@@ -9,7 +9,7 @@ export class ValidatorUtils {
 
   static throwOnError(validErrors: ValidErrors): void {
     if (validErrors.hasErrors()) {
-      throw new MethodArgumentNotValidException(ValidErrors.toString())
+      throw new MethodArgumentNotValidError(ValidErrors.toString())
     }
   }
 
