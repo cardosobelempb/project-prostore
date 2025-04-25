@@ -16,5 +16,10 @@ export class ErrorConstants {
   static readonly NOT_FOUND: string = '.Resource not found '
   static readonly BAD_REQUEST: string = '.Database exception '
   static readonly UNPROCESSABLE_ENTITY: string = '.Validation exception '
+  static readonly VALIDATION_ERROR: string = '.Validation error '
   static readonly UNAUTHORIZED: string = '.Unauthorized '
+  static readonly INVALID_CREDENTIALS: string = '.Invalid credentials '
+  static readonly INVALID_TOKEN: string = '.Invalid token '
+  static readonly INVALID_CREDENTIALS_OR_TOKEN: string =
+    '.Invalid credentials or token '
 }

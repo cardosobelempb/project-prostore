@@ -1,6 +1,6 @@
 import { BadRequestError } from './bad-request.error'
 import { ConflictError } from './conflict.error'
-import { DataIntegrityViolationError } from './dataIntegrity-violation.error'
+import { DataIntegrityViolationError } from './data-integrity-violation.error'
 import { IllegalArgumentError } from './illegal-argument.error'
 import { UnauthorizedError } from './unauthorized-error'
 import { NotFoundError } from './not-found.error'

@@ -11,7 +11,7 @@ import { BadRequestError, ConflictError, NotFoundError } from '@shared/core';
 import { RegisterUserService, IUser } from '@user/core';
 import { Response, Request } from 'express';
 
-@Controller('register')
+@Controller('/register')
 export class RegisterUserController {
   constructor(private readonly registerUserService: RegisterUserService) {}
 

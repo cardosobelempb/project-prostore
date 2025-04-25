@@ -1,5 +1,3 @@
-import { Product } from "./product.entity";
-import { IProduct } from "./product.interface";
+import { IProduct } from './product.entity'
 
-export type { IProduct };
-export { Product };
+export type { IProduct }
