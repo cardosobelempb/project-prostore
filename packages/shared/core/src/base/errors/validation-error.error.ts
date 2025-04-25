@@ -23,17 +23,16 @@ export class ValidationError extends StandardError {
   }
 }
 
-const valid = new ValidationError(
-  new Date(),
-  400,
-  'Validation Error',
-  'Invalid data',
-  '/api/items',
-)
-valid.addErros('name', 'Name is required')
-valid.addErros('email', 'Email is invalid')
+// const valid = new ValidationError(
+//   new Date(),
+//   400,
+//   'Validation Error',
+//   'Invalid data',
+//   '/api/items',
+// )
+// valid.addErros('name', 'Name is required')
+// valid.addErros('email', 'Email is invalid')
 
-console.log(valid.getErros())
-console.log(valid)
-
-console.log(valid.getErros().map(error => error.message))
+// console.log(valid.getErros())
+// console.log(valid)
+// console.log(valid.getErros().map(error => error.message))

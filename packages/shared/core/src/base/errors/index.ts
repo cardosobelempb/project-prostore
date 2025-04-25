@@ -9,6 +9,7 @@ import {
   UnauthorizedError,
   BadRequestError,
   ConflictError,
+  AlreadyExistsError,
 } from './exceptions'
 import { FieldMessage } from './field-message.error'
 import { StandardError } from './standard-error.error'
@@ -28,4 +29,5 @@ export {
   BadRequestError,
   UnauthorizedError,
   ConflictError,
+  AlreadyExistsError,
 }

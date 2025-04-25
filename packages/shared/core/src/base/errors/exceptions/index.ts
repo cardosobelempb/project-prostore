@@ -8,6 +8,7 @@ import { ForbiddenError } from './forbidden.error'
 import { ResourceNotFoundError } from './resource-not-found.error'
 import { MethodArgumentNotValidError } from './method-argument-not-valid.error'
 import { ErrorConstants } from './error-constants.error'
+import { AlreadyExistsError } from './already-exists.error'
 
 export {
   DataIntegrityViolationError,
@@ -20,4 +21,5 @@ export {
   UnauthorizedError,
   BadRequestError,
   ConflictError,
+  AlreadyExistsError,
 }

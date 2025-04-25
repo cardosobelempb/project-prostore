@@ -23,6 +23,7 @@ export class RegisterUserController {
     @Req() req: Request,
   ) {
     const { name, email, password } = request;
+    console.log('RegisterUserController');
     const response = await this.registerUserService.execute({
       email,
       name,
@@ -30,17 +31,17 @@ export class RegisterUserController {
     });
 
     const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${response.value}`;
-    console.log(response, uri);
+    console.log('Response =>', response, uri);
 
-    if (response.isLeft()) {
-      const error = response.value;
+    // if (response.isLeft()) {
+    //   const error = response.value;
 
-      switch (error.constructor) {
-        case NotFoundError:
-          throw new ConflictError(error.message);
-        default:
-          throw new BadRequestError(error.message);
-      }
-    }
+    //   switch (error.constructor) {
+    //     case NotFoundError:
+    //       throw new ConflictError(error.message);
+    //     default:
+    //       throw new BadRequestError(error.message);
+    //   }
+    // }
   }
 }

@@ -20,6 +20,7 @@ import {
   ConflictError,
   ValidationError,
   BadRequestError,
+  AlreadyExistsError,
 } from './errors'
 import { DomainEvents, IDomainEvent, IEventHandler } from './events'
 import { Either, Left, Right, left, right } from './handle-errors'
@@ -43,6 +44,8 @@ import {
   ObjectUtils,
   StringUtils,
   TimeUtils,
+  PasswordUtils,
+  PriceUtils,
 } from './utils'
 
 export {
@@ -72,6 +75,7 @@ export {
   StringUtils,
   TimeUtils,
   NotFoundError,
+  AlreadyExistsError,
   ValidError,
   ValidErrors,
   ValidFieldMessage,
@@ -80,6 +84,8 @@ export {
   ValidatorConstants,
   ValidatorUtils,
   WatchedList,
+  PasswordUtils,
+  PriceUtils,
   left,
   right,
   waitFor,

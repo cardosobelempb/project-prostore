@@ -1,4 +1,13 @@
-import { HashGenerator, HashPassword, IService, right } from '@shared/core'
+import {
+  ConflictError,
+  HashGenerator,
+  HashPassword,
+  IService,
+  MethodArgumentNotValidError,
+  PasswordUtils,
+  left,
+  right,
+} from '@shared/core'
 import { User } from '../entities/user.entity'
 import { IUser } from '../entities/user.interface'
 import { UserRepository } from '../repositories'
@@ -12,10 +21,32 @@ export class RegisterUserService
   ) {}
   async execute(input: IUser.Request): Promise<IUser.Response> {
     const { email, password, name } = input
+
     const userWithEmail = await this.userRepository.findByEmail(email.value)
+    console.log('userWithEmail =>', userWithEmail?.email)
     if (userWithEmail) {
-      throw new Error('User with this email already exists')
+      throw new ConflictError('User with this email already exists')
     }
+
+    // const strongpassword = PasswordUtils.getPasswordStrength(password.value)
+
+    // if (strongpassword) {
+    //   switch (strongpassword) {
+    //     case 'Fraca':
+    //       throw new MethodArgumentNotValidError(
+    //         'A senha deve ter no mínimo 8 caracteres.',
+    //       )
+    //     case 'Média':
+    //       throw new MethodArgumentNotValidError(
+    //         'A senha deve conter pelo menos uma letra maiúscula.',
+    //       )
+    //     default:
+    //       throw new MethodArgumentNotValidError(
+    //         'A senha deve conter pelo menos um símbolo especial.',
+    //       )
+    //   }
+    // }
+
     const hashedPassword = await this.hashGenerator.hash(password.value)
     const user = User.create({
       name,
