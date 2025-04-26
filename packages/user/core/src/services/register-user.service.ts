@@ -3,10 +3,11 @@ import {
   HashGenerator,
   HashPassword,
   IService,
+  left,
   MethodArgumentNotValidError,
   PasswordUtils,
-  left,
   right,
+  StandardError,
 } from '@shared/core'
 import { User } from '../entities/user.entity'
 import { IUser } from '../entities/user.interface'
@@ -22,13 +23,13 @@ export class RegisterUserService
   async execute(input: IUser.Request): Promise<IUser.Response> {
     const { email, password, name } = input
 
-    const userWithEmail = await this.userRepository.findByEmail(email.value)
-    console.log('userWithEmail =>', userWithEmail?.email)
+    const userWithEmail = await this.userRepository.findByEmail(email)
+
     if (userWithEmail) {
-      throw new ConflictError('User with this email already exists')
+      return left(new ConflictError('User with this email already exists'))
     }
 
-    // const strongpassword = PasswordUtils.getPasswordStrength(password.value)
+    // const strongpassword = PasswordUtils.getPasswordStrength(password)
 
     // if (strongpassword) {
     //   switch (strongpassword) {
@@ -47,11 +48,11 @@ export class RegisterUserService
     //   }
     // }
 
-    const hashedPassword = await this.hashGenerator.hash(password.value)
+    const hashedPassword = await this.hashGenerator.hash(password)
     const user = User.create({
       name,
       email,
-      password: new HashPassword(hashedPassword),
+      password: hashedPassword,
     })
 
     await this.userRepository.create(user)

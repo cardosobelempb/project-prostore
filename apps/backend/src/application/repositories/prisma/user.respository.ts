@@ -28,12 +28,12 @@ export class UserPrismaRepository implements UserRepository {
   }
 
   async create(entity: User): Promise<void> {
-    throw new Error('Method not implemented.');
+    const data = UserPrismaMapper.toPrisma(entity);
+    await this.prismaServices.user.create({ data });
   }
 
   async update(entity: User): Promise<void> {
-    const data = UserPrismaMapper.toPrisma(entity);
-    await this.prismaServices.user.create({ data });
+    throw new Error('Method not implemented.');
   }
 
   async delete(entity: User): Promise<void> {

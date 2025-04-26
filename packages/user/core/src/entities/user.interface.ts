@@ -1,20 +1,15 @@
-import {
-  Email,
-  PersonName,
-  HashPassword,
-  NotFoundError,
-  Either,
-} from '@shared/core'
+import { Either, NotFoundError } from '@shared/core'
 export namespace IUser {
   export enum IRoles {
     ADMIN = 'ADMIN',
     CLIENT = 'CLIENT',
     USER = 'USER',
   }
+
   export interface IProps {
-    name: PersonName
-    email: Email
-    password: HashPassword
+    name: string
+    email: string
+    password: string
     role?: IRoles
     emailVerified?: Date | null
     image?: string
@@ -41,9 +36,9 @@ export namespace IUser {
   }
 
   export interface Request {
-    name: PersonName
-    email: Email
-    password: HashPassword
+    name: string
+    email: string
+    password: string
   }
 
   export type Response = Either<

@@ -1,14 +1,14 @@
-import { Email, HashPassword, PersonName, UniqueUUID } from '@shared/core';
-import { User } from '@user/core';
 import { Prisma, User as UserMapper } from '@prisma/client';
+import { UniqueUUID } from '@shared/core';
+import { User } from '@user/core';
 
 export class UserPrismaMapper {
   static toDomain(raw: UserMapper): User {
     return User.create(
       {
-        name: new PersonName(raw.name),
-        email: new Email(raw.email),
-        password: new HashPassword(raw.password),
+        name: raw.name,
+        email: raw.email,
+        password: raw.password,
       },
       new UniqueUUID(raw.id),
     );
@@ -17,9 +17,9 @@ export class UserPrismaMapper {
   static toPrisma(entity: User): Prisma.UserUncheckedCreateInput {
     return {
       id: entity.id.toString(),
-      name: entity.name.value,
-      email: entity.email.value,
-      password: entity.password.value,
+      name: entity.name,
+      email: entity.email,
+      password: entity.password,
     };
   }
 }

@@ -1,37 +1,175 @@
-// -exception.filter.ts
 import {
-  Catch,
   ExceptionFilter,
+  Catch,
   ArgumentsHost,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
-import { errorHandlers } from './error-handlers';
-import { StandardError } from './standard-error.interface';
+import {
+  BadRequestError,
+  ConflictError,
+  DataIntegrityViolationError,
+  EntityNotFoundError,
+  ErrorConstants,
+  MethodArgumentNotValidError,
+  ResourceNotFoundError,
+} from '@shared/core';
+import { Request, Response } from 'express';
+import { ZodError } from 'zod';
 
-@Catch()
+interface StandardError {
+  timestamp: string;
+  status: number;
+  error: string;
+  message: string;
+  path: string;
+}
+
+interface ValidationError extends StandardError {
+  errors?: Array<{ field: string; message: string }>;
+}
+
+@Catch() // Captura qualquer tipo de erro (Error, HttpException, ZodError, etc.)
 export class ErrorFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
+  private readonly logger = new Logger(ErrorFilter.name); // Instância do logger
+
+  catch(exception: Error | ZodError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const handler = errorHandlers[exception.name];
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let error: StandardError | ValidationError = {
+      timestamp: new Date().toISOString(),
+      status,
+      error: 'Internal server error',
+      message: exception.message || 'Unexpected error',
+      path: request.url,
+    };
 
-    let error: StandardError;
+    // Verificação explícita para ZodError
+    if (exception instanceof ZodError) {
+      this.logger.error('Zod validation error detected'); // Logando o erro de Zod
 
-    if (handler) {
-      error = handler(exception, request);
-    } else {
-      error = {
+      status = HttpStatus.UNPROCESSABLE_ENTITY;
+      const validationError: ValidationError = {
+        ...error,
+        status,
+        error: ErrorConstants.INTEGRITY_VIOLATION,
+        message: 'Validation failed',
+        errors: exception.issues.map((issue) => ({
+          field: issue.path.join('.'),
+          message: issue.message,
+        })),
+      };
+
+      return response.status(status).json(validationError);
+    }
+
+    // Verificação explícita para ConflictError
+    if (exception instanceof ConflictError) {
+      this.logger.error('ConflictError validation error detected'); // Logando o erro de Zod
+
+      status = HttpStatus.CONFLICT;
+      const standardError: StandardError = {
         timestamp: new Date().toISOString(),
-        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        status,
         error: 'Internal server error',
         message: exception.message || 'Unexpected error',
         path: request.url,
       };
+
+      return response.status(status).json(standardError);
     }
 
-    response.status(error.status).json(error);
+    // Verificação explícita para ResourceNotFoundError
+    if (exception instanceof ResourceNotFoundError) {
+      this.logger.error('ResourceNotFoundError validation error detected'); // Logando o erro de Zod
+
+      status = HttpStatus.NOT_FOUND;
+      const standardError: StandardError = {
+        timestamp: new Date().toISOString(),
+        status,
+        error: ErrorConstants.RESOURCE_NOT_FOUND,
+        message: exception.message || 'Unexpected error',
+        path: request.url,
+      };
+
+      return response.status(status).json(standardError);
+    }
+
+    // Verificação explícita para EntityNotFoundError
+    if (exception instanceof EntityNotFoundError) {
+      this.logger.error('EntityNotFoundError validation error detected'); // Logando o erro de Zod
+
+      status = HttpStatus.NOT_FOUND;
+      const standardError: StandardError = {
+        timestamp: new Date().toISOString(),
+        status,
+        error: ErrorConstants.ENTITY_NOT_FOUND,
+        message: exception.message || 'Unexpected error',
+        path: request.url,
+      };
+
+      return response.status(status).json(standardError);
+    }
+
+    // Verificação explícita para DataIntegrityViolationError
+    if (exception instanceof DataIntegrityViolationError) {
+      this.logger.error(
+        'DataIntegrityViolationError validation error detected',
+      ); // Logando o erro de Zod
+
+      status = HttpStatus.NOT_FOUND;
+      const standardError: StandardError = {
+        timestamp: new Date().toISOString(),
+        status,
+        error: ErrorConstants.DATA_INTEGRITY_VIOLATION,
+        message: exception.message || 'Unexpected error',
+        path: request.url,
+      };
+
+      return response.status(status).json(standardError);
+    }
+
+    // Verificação explícita para BadRequestError
+    if (exception instanceof BadRequestError) {
+      this.logger.error('BadRequestError validation error detected'); // Logando o erro de Zod
+
+      status = HttpStatus.BAD_REQUEST;
+      const standardError: StandardError = {
+        timestamp: new Date().toISOString(),
+        status,
+        error: ErrorConstants.BAD_REQUEST,
+        message: exception.message || 'Unexpected error',
+        path: request.url,
+      };
+
+      return response.status(status).json(standardError);
+    }
+
+    // Verificação explícita para BadRequestError
+    if (exception instanceof MethodArgumentNotValidError) {
+      this.logger.error(
+        'MethodArgumentNotValidError validation error detected',
+      ); // Logando o erro de Zod
+
+      status = HttpStatus.BAD_REQUEST;
+      const standardError: StandardError = {
+        timestamp: new Date().toISOString(),
+        status,
+        error: ErrorConstants.INTEGRITY_VIOLATION,
+        message: exception.message || 'Unexpected error',
+        path: request.url,
+      };
+
+      return response.status(status).json(standardError);
+    }
+
+    // Logando o erro no console para depuração
+    this.logger.error(exception.stack || exception.message);
+
+    // Retornando a resposta com o erro processado
+    response.status(status).json(error);
   }
 }

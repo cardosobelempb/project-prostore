@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserPrismaRepository } from 'src/application/repositories/prisma/user.respository';
+import { USER_REPOSITORY } from 'src/shared/constants/repositories.constants';
 import { PrismaService } from 'src/shared/database/prisma/prisma.service';
 
 @Module({
@@ -8,38 +9,13 @@ import { PrismaService } from 'src/shared/database/prisma/prisma.service';
   providers: [
     PrismaService,
     {
-      provide: 'PrismaService',
-      useClass: PrismaService,
-    },
-    {
-      provide: 'UserRepository',
-      useClass: UserPrismaRepository,
-    },
-    {
-      provide: 'UserRepository',
+      provide: USER_REPOSITORY, // O token constante para o UserRepository
       useFactory: (prismaService: PrismaService) => {
         return new UserPrismaRepository(prismaService);
       },
-      inject: ['PrismaService'],
+      inject: [PrismaService], // Injetando o PrismaService
     },
   ],
-  exports: [
-    PrismaService,
-    {
-      provide: 'PrismaService',
-      useClass: PrismaService,
-    },
-    {
-      provide: 'UserRepository',
-      useClass: UserPrismaRepository,
-    },
-    {
-      provide: 'UserRepository',
-      useFactory: (prismaService: PrismaService) => {
-        return new UserPrismaRepository(prismaService);
-      },
-      inject: ['PrismaService'],
-    },
-  ],
+  exports: [USER_REPOSITORY], // Apenas exporta o token do repositório, não a implementação duplicada
 })
 export class DatabaseModule {}

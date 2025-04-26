@@ -10,6 +10,9 @@ import {
   BadRequestError,
   ConflictError,
   AlreadyExistsError,
+  UnprocessableEntityError,
+  UnsupportedMediaTypeError,
+  EntityNotFoundError,
 } from './exceptions'
 import { FieldMessage } from './field-message.error'
 import { StandardError } from './standard-error.error'
@@ -30,4 +33,7 @@ export {
   UnauthorizedError,
   ConflictError,
   AlreadyExistsError,
+  UnprocessableEntityError,
+  UnsupportedMediaTypeError,
+  EntityNotFoundError,
 }

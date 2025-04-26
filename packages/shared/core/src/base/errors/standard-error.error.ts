@@ -19,13 +19,3 @@ export class StandardError {
     this.path = path
   }
 }
-
-// const error = new StandardError(
-//   new Date(),
-//   404,
-//   "Not Found",
-//   "Resource missing",
-//   "/api/items/1"
-// );
-
-// console.log(error);

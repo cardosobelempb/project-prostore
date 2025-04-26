@@ -8,11 +8,9 @@ export function userFactory(
 ) {
   const user = User.create(
     {
-      name: new PersonName('Lucas Cardoso'),
-      email: new Email('lucas@gmail.com'),
-      password: new HashPassword(
-        '$2a$12$T3ObT0q.pxZ1PXL7l6YOy.BygRM0HBogIPpQOgjHoqM8vrrt9h46W',
-      ),
+      name: 'Lucas Cardoso',
+      email: 'lucas@gmail.com',
+      password: '$2a$12$T3ObT0q.pxZ1PXL7l6YOy.BygRM0HBogIPpQOgjHoqM8vrrt9h46W',
       role: IUser.IRoles.USER,
       ...override,
     },

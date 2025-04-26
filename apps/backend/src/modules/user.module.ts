@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
 import { HashGenerator } from '@shared/core';
-import { RegisterUserService } from '@user/core';
-import { UserPrismaRepository } from 'src/application/repositories/prisma/user.respository';
+import { RegisterUserService, UserRepository } from '@user/core';
 import { RegisterUserController } from '../infra/controllers/user/register-user.controller';
 import { CryptoGraphyModule } from './cryptography.module';
 import { DatabaseModule } from './database.module';
+import { USER_REPOSITORY } from '../shared/constants/repositories.constants';
 
 @Module({
-  imports: [DatabaseModule, CryptoGraphyModule],
+  imports: [DatabaseModule, CryptoGraphyModule], // Importando o DatabaseModule para ter acesso ao USER_REPOSITORY
   controllers: [RegisterUserController],
   providers: [
     {
       provide: RegisterUserService,
       useFactory: (
+        userRepository: UserRepository,
         hashGenerator: HashGenerator,
-        userRepository: UserPrismaRepository,
       ) => {
         return new RegisterUserService(userRepository, hashGenerator);
       },
-      inject: [HashGenerator, 'UserRepository'],
+      inject: [USER_REPOSITORY, HashGenerator], // Usando o token USER_REPOSITORY
     },
   ],
 })

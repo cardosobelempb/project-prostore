@@ -21,6 +21,7 @@ import {
   ValidationError,
   BadRequestError,
   AlreadyExistsError,
+  EntityNotFoundError,
 } from './errors'
 import { DomainEvents, IDomainEvent, IEventHandler } from './events'
 import { Either, Left, Right, left, right } from './handle-errors'
@@ -86,6 +87,7 @@ export {
   WatchedList,
   PasswordUtils,
   PriceUtils,
+  EntityNotFoundError,
   left,
   right,
   waitFor,
