@@ -1,13 +1,11 @@
 import {
   ConflictError,
+  EmailVO,
   HashGenerator,
-  HashPassword,
   IService,
   left,
-  MethodArgumentNotValidError,
-  PasswordUtils,
+  NameVO,
   right,
-  StandardError,
 } from '@shared/core'
 import { User } from '../entities/user.entity'
 import { IUser } from '../entities/user.interface'
@@ -49,14 +47,17 @@ export class RegisterUserService
     // }
 
     const hashedPassword = await this.hashGenerator.hash(password)
-    const user = User.create({
-      name,
-      email,
+
+    const entity = User.create({
+      name: new NameVO(name, { minLength: 3, maxLength: 60 }),
+      email: new EmailVO(email),
       password: hashedPassword,
     })
 
-    await this.userRepository.create(user)
+    console.log('RegisterUserService =>', entity)
 
-    return right({ user })
+    const result = await this.userRepository.create(entity)
+
+    return right({ user: result })
   }
 }

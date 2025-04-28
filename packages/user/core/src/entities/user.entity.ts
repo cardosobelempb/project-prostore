@@ -1,48 +1,48 @@
-import { Entity, Optional, UniqueUUID } from "@shared/core";
-import { IUser } from "./user.interface";
+import { EntityVO, Optional, UniqueUUID, UUIDVO } from '@shared/core'
+import { IUser } from './user.interface'
 
-export class User extends Entity<IUser.IProps> {
+export class User extends EntityVO<IUser.IProps> {
   public get name() {
-    return this.props.name;
+    return this.props.name
   }
   public get email() {
-    return this.props.email;
+    return this.props.email
   }
   public get password() {
-    return this.props.password;
+    return this.props.password
   }
   public get role() {
-    return this.props.role;
+    return this.props.role
   }
   public get emailVerified() {
-    return this.props.emailVerified;
+    return this.props.emailVerified
   }
   public get image() {
-    return this.props.image;
+    return this.props.image
   }
   public get address() {
-    return this.props.address;
+    return this.props.address
   }
   public get paymentMethod() {
-    return this.props.paymentMethod;
+    return this.props.paymentMethod
   }
   public get createdAt() {
-    return this.props.createdAt;
+    return this.props.createdAt
   }
   public get updatedAt() {
-    return this.props.updatedAt;
+    return this.props.updatedAt
   }
 
-  static create(props: Optional<IUser.IProps, "createdAt">, id?: UniqueUUID) {
+  static create(props: Optional<IUser.IProps, 'createdAt'>, id?: UUIDVO) {
     const user = new User(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },
-      id
-    );
+      id,
+    )
 
-    return user;
+    return user
   }
 }
 

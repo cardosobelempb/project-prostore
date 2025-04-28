@@ -1,6 +1,6 @@
-import { UniqueUUID } from '../../model'
+import { UUIDVO } from '../vo'
 
 export interface IDomainEvent {
   ocurredAt: Date
-  getAggregateId(): UniqueUUID
+  getAggregateId(): UUIDVO
 }

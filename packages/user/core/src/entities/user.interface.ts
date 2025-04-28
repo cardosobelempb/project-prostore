@@ -1,4 +1,12 @@
-import { Either, NotFoundError } from '@shared/core'
+import {
+  BadRequestError,
+  ConflictError,
+  Either,
+  EmailVO,
+  NameVO,
+  NotFoundError,
+  UUIDVO,
+} from '@shared/core'
 export namespace IUser {
   export enum IRoles {
     ADMIN = 'ADMIN',
@@ -7,8 +15,9 @@ export namespace IUser {
   }
 
   export interface IProps {
-    name: string
-    email: string
+    id?: UUIDVO
+    name: NameVO
+    email: EmailVO
     password: string
     role?: IRoles
     emailVerified?: Date | null
@@ -42,9 +51,9 @@ export namespace IUser {
   }
 
   export type Response = Either<
-    NotFoundError,
+    ConflictError,
     {
-      user: IProps
+      user: IUser.IProps
     }
   >
 }

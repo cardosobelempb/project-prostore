@@ -1,8 +1,8 @@
-import { Entity } from '../../model'
+import { EntityVO } from '../../model'
 import { IDomainEvent } from '../events/domain-event.interface'
 import { DomainEvents } from '../events/domain-events.event'
 
-export abstract class AggregateRoot<Props> extends Entity<Props> {
+export abstract class AggregateRoot<Props> extends EntityVO<Props> {
   private _domainEvents: IDomainEvent[] = []
 
   get domainEvents(): IDomainEvent[] {

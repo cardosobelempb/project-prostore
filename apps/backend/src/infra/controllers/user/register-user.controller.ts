@@ -7,18 +7,10 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import {
-  BadRequestError,
-  ConflictError,
-  Email,
-  HashPassword,
-  NotFoundError,
-  PersonName,
-} from '@shared/core';
-import { RegisterUserService, IUser, CreateUserSchema } from '@user/core';
-import { Response, Request } from 'express';
-import { ZodValidationPipe } from 'src/shared/validations/zod-validation.pipe';
-import { z } from 'zod';
+
+import { right } from '@shared/core';
+import { IUser, RegisterUserService } from '@user/core';
+import { Request, Response } from 'express';
 
 @Controller('/register')
 export class RegisterUserController {
@@ -27,34 +19,40 @@ export class RegisterUserController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async handle(
-    @Body(new ZodValidationPipe({ schema: CreateUserSchema }))
-    request: z.infer<typeof CreateUserSchema>,
+    @Body()
+    request: IUser.Request,
     @Res() res: Response,
     @Req() req: Request,
   ) {
     const { name, email, password } = request;
-    console.log(email);
-    const response = await this.registerUserService.execute({
+
+    const user = await this.registerUserService.execute({
       email,
       name,
       password,
     });
 
-    const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${response.value}`;
-    console.log('Response =>', response, uri);
+    const {} = user.value;
 
-    if (response.isLeft()) {
-      const error = response.value;
-      console.log('Error =>', error);
+    console.log('isLeft =>', user.isLeft());
+    console.log('value =>', user.value);
 
-      switch (error.constructor) {
-        case NotFoundError:
-          throw new ConflictError(error.message);
-        default:
-          throw new BadRequestError(error.message);
-      }
-    }
+    console.log('isRight =>', user.isRight());
+    const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${''}`;
+    console.log('RegisterUserController  =>', user.value, uri);
 
-    res.location(uri).send();
+    // if (response.isLeft()) {
+    //   const error = response.value;
+    //   switch (error.constructor) {
+    //     case NotFoundError:
+    //       throw new ConflictError(error.message);
+    //     default:
+    //       throw new BadRequestError(error.message);
+    //   }
+    // }
+
+    // res.location(uri).send();
+
+    return right({ user });
   }
 }

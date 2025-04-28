@@ -1,5 +1,6 @@
 import { UniqueUUID } from '../../model'
 import { AggregateRoot } from '../abstract/aggregate-root.abstract'
+import { UUIDVO } from '../vo'
 import { IDomainEvent } from './domain-event.interface'
 
 type DomainEventCallback = (event: any) => void
@@ -32,12 +33,12 @@ export class DomainEvents {
   }
 
   private static findMarkedAggregateByID(
-    id: UniqueUUID,
+    id: UUIDVO,
   ): AggregateRoot<unknown> | undefined {
     return this.markedAggregates.find(aggregate => aggregate.id.equals(id))
   }
 
-  public static dispatchEventsForAggregate(id: UniqueUUID) {
+  public static dispatchEventsForAggregate(id: UUIDVO) {
     const aggregate = this.findMarkedAggregateByID(id)
 
     if (aggregate) {

@@ -1,6 +1,7 @@
-import { IService } from './service.interface'
-import { IPagination } from './pagination.interface'
 import { Repository } from '../abstract/repository.abstract'
+import { Optional } from './optional'
+import { IPagination } from './pagination.interface'
+import { IService } from './service.interface'
 
-export type { IService, IPagination }
 export { Repository }
+export type { IPagination, IService, Optional }

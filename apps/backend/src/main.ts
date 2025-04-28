@@ -10,7 +10,6 @@ async function bootstrap() {
 
   const envService = app.get(EnvService);
   const prefixUrl = envService.get('PREFIX_URL');
-  console.log('prefix url =>', prefixUrl);
 
   app.setGlobalPrefix(prefixUrl);
   await app.listen(process.env.PORT ?? 4000);
