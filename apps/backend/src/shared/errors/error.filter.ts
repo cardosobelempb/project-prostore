@@ -12,6 +12,7 @@ import {
   EntityNotFoundError,
   ErrorConstants,
   MethodArgumentNotValidError,
+  NotAllwedError,
   ResourceNotFoundError,
 } from '@shared/core';
 import { Request, Response } from 'express';
@@ -101,6 +102,22 @@ export class ErrorFilter implements ExceptionFilter {
     // Verificação explícita para EntityNotFoundError
     if (exception instanceof EntityNotFoundError) {
       this.logger.error('EntityNotFoundError validation error detected'); // Logando o erro de Zod
+
+      status = HttpStatus.NOT_FOUND;
+      const standardError: StandardError = {
+        timestamp: new Date().toISOString(),
+        status,
+        error: ErrorConstants.ENTITY_NOT_FOUND,
+        message: exception.message || 'Unexpected error',
+        path: request.url,
+      };
+
+      return response.status(status).json(standardError);
+    }
+
+    // Verificação explícita para EntityNotFoundError
+    if (exception instanceof NotAllwedError) {
+      this.logger.error('NotAllwedError validation error detected'); // Logando o erro de Zod
 
       status = HttpStatus.NOT_FOUND;
       const standardError: StandardError = {

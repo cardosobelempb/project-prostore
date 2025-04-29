@@ -7,7 +7,12 @@ POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-  "name": "Maria Gorete",
-  "email": "gorete.c.lima@hotmail.com",
+  "name": "Kevin Cardoso",
+  "email": "kevin.c.lima@hotmail.com",
   "password": "262011"
 }
+
+###
+DELETE  {{baseUrl}}/users/e6a33928-93e6-434d-8739-18159bfb45a3
+Content-Type: application/json
+

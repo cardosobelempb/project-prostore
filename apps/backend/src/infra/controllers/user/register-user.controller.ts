@@ -20,7 +20,7 @@ export class RegisterUserController {
   @HttpCode(HttpStatus.CREATED)
   async handle(
     @Body()
-    request: IUser.Request,
+    request: IUser.ICreateRequest,
     @Res() res: Response,
     @Req() req: Request,
   ) {
@@ -32,13 +32,7 @@ export class RegisterUserController {
       password,
     });
 
-    const {} = user.value;
-
-    console.log('isLeft =>', user.isLeft());
-    console.log('value =>', user.value);
-
-    console.log('isRight =>', user.isRight());
-    const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${''}`;
+    const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${user.value}`;
     console.log('RegisterUserController  =>', user.value, uri);
 
     // if (response.isLeft()) {
