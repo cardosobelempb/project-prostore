@@ -1,4 +1,4 @@
-import { IPagination } from '@shared/core';
+import { IPagination, UUIDVO } from '@shared/core';
 import { User, UserRepository } from '@user/core';
 import { PrismaService } from 'src/shared/database/prisma/prisma.service';
 import { UserPrismaMapper } from './mappers/user-prisma.mapper';
@@ -61,7 +61,7 @@ export class UserPrismaRepository implements UserRepository {
   async delete(entity: User): Promise<void> {
     await this.prismaService.user.delete({
       where: {
-        id: entity.id.toString(),
+        id: entity.id.getValue(),
       },
     });
   }

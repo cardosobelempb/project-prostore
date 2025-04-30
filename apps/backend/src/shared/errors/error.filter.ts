@@ -107,7 +107,7 @@ export class ErrorFilter implements ExceptionFilter {
       const standardError: StandardError = {
         timestamp: new Date().toISOString(),
         status,
-        error: ErrorConstants.ENTITY_NOT_FOUND,
+        error: ErrorConstants.NOT_FOUND,
         message: exception.message || 'Unexpected error',
         path: request.url,
       };
@@ -119,11 +119,11 @@ export class ErrorFilter implements ExceptionFilter {
     if (exception instanceof NotAllwedError) {
       this.logger.error('NotAllwedError validation error detected'); // Logando o erro de Zod
 
-      status = HttpStatus.NOT_FOUND;
+      status = HttpStatus.METHOD_NOT_ALLOWED;
       const standardError: StandardError = {
         timestamp: new Date().toISOString(),
         status,
-        error: ErrorConstants.ENTITY_NOT_FOUND,
+        error: ErrorConstants.METHOD_NOT_ALLOWED,
         message: exception.message || 'Unexpected error',
         path: request.url,
       };

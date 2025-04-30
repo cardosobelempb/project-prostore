@@ -20,6 +20,7 @@ export class ErrorConstants {
   static readonly UNAUTHORIZED: string = '.Unauthorized '
   static readonly INVALID_CREDENTIALS: string = '.Invalid credentials '
   static readonly INVALID_TOKEN: string = '.Invalid token '
+  static readonly METHOD_NOT_ALLOWED: string = '.Method not allower '
   static readonly INVALID_CREDENTIALS_OR_TOKEN: string =
     '.Invalid credentials or token '
 }

@@ -2,6 +2,7 @@ import { IPagination } from '../../../infrastruecture'
 
 export abstract class Repository<T> {
   abstract findById(id: string): Promise<T | null>
+  abstract findById(id: string): Promise<T | null>
   abstract findMany(params: IPagination): Promise<T[]>
   abstract create(entity: T): Promise<T>
   abstract update(entity: T): Promise<void>

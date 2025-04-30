@@ -4,23 +4,25 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 
-import { right } from '@shared/core';
+import { right, UUIDVO } from '@shared/core';
 import { DeleteUserService, IUser } from '@user/core';
 
-@Controller('/users')
+@Controller('users')
 export class DeleteUserController {
   constructor(private readonly deleteUserService: DeleteUserService) {}
 
-  @Delete('/:userId')
+  @Delete(':userId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async handle(
-    @Param('userId')
-    request: IUser.IDeleteRequest,
+    @Param('userId') userId: string,
   ): Promise<IUser.IDeleteResponse> {
-    const { userId } = request;
+    console.log('DeleteUserController =>', userId);
+
     await this.deleteUserService.execute({ userId });
+
     return right({});
   }
 }

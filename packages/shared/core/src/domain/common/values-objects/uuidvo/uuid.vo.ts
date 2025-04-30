@@ -4,13 +4,13 @@ export class UUIDVO {
   private readonly value: string
 
   constructor(uuid?: string) {
-    const finalUUID = uuid ?? UUIDVO.generate()
+    const cleanUUID = uuid?.replace(/^urn:uuid:/i, '') ?? UUIDVO.generate()
 
-    if (!UUIDVO.isValid(finalUUID)) {
-      throw new BadRequestError(`Invalid UUIDv4 format: "${finalUUID}"`)
+    if (!UUIDVO.isValid(cleanUUID)) {
+      throw new BadRequestError(`Invalid UUIDv4 format: "${cleanUUID}"`)
     }
 
-    this.value = finalUUID
+    this.value = cleanUUID
   }
 
   // Retorna o valor encapsulado

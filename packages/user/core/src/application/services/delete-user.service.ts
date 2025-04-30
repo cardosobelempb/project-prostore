@@ -1,4 +1,11 @@
-import { IService, left, ResourceNotFoundError, right } from '@shared/core'
+import {
+  IService,
+  left,
+  NotAllwedError,
+  ResourceNotFoundError,
+  right,
+  UUIDVO,
+} from '@shared/core'
 import { UserRepository } from '../../infrastruecture/repositories'
 import { IUser } from '../../interfaces/user.interface'
 
@@ -11,13 +18,14 @@ export class DeleteUserService
     console.log('DeleteUserService', userId)
 
     const user = await this.userRepository.findById(userId)
+    console.log('User =>', user)
 
     if (!user) {
       return left(new ResourceNotFoundError('Resource not fond'))
     }
 
     if (user.id.getValue() !== userId) {
-      return left(new ResourceNotFoundError('Not allwerd'))
+      return left(new NotAllwedError('Not allowed'))
     }
 
     await this.userRepository.delete(user)
