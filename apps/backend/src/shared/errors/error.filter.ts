@@ -75,7 +75,7 @@ export class ErrorFilter implements ExceptionFilter {
       const standardError: StandardError = {
         timestamp: new Date().toISOString(),
         status,
-        error: 'Internal server error',
+        error: ErrorConstants.CONFLICT_ERROR,
         message: exception.message || 'Unexpected error',
         path: request.url,
       };

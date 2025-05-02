@@ -128,4 +128,12 @@ export class StringUtils {
     }
     return result
   }
+
+  static getInitials(name: string): string {
+    return name
+      .trim() // Remove espaços extras nas extremidades
+      .split(/\s+/) // Divide por qualquer espaço em branco
+      .map(word => word[0]?.toUpperCase()) // Pega a primeira letra de cada palavra, em minúsculo
+      .join('') // Junta as letras
+  }
 }

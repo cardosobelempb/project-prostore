@@ -1,4 +1,4 @@
-import { IPagination, UUIDVO } from '@shared/core';
+import { IPagination } from '@shared/core';
 import { User, UserRepository } from '@user/core';
 import { PrismaService } from 'src/shared/database/prisma/prisma.service';
 import { UserPrismaMapper } from './mappers/user-prisma.mapper';
@@ -25,7 +25,9 @@ export class UserPrismaRepository implements UserRepository {
     });
 
     console.log('findById => ', user);
-    if (!user) return null;
+    if (!user) {
+      return null;
+    }
 
     return UserPrismaMapper.toDomain(user);
   }
@@ -42,10 +44,9 @@ export class UserPrismaRepository implements UserRepository {
     return users.map(UserPrismaMapper.toDomain);
   }
 
-  async create(entity: User): Promise<User> {
+  async create(entity: User): Promise<void> {
     const data = UserPrismaMapper.toPrisma(entity);
-    const result = await this.prismaService.user.create({ data });
-    return UserPrismaMapper.toDomain(result);
+    await this.prismaService.user.create({ data });
   }
 
   async update(entity: User): Promise<void> {

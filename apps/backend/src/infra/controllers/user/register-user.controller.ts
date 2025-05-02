@@ -1,16 +1,14 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   HttpCode,
   HttpStatus,
   Post,
-  Req,
-  Res,
 } from '@nestjs/common';
 
-import { right } from '@shared/core';
+import { ConflictError, ResourceNotFoundError, right } from '@shared/core';
 import { IUser, RegisterUserService } from '@user/core';
-import { Request, Response } from 'express';
 
 @Controller('/register')
 export class RegisterUserController {
@@ -21,32 +19,33 @@ export class RegisterUserController {
   async handle(
     @Body()
     request: IUser.ICreateRequest,
-    @Res() res: Response,
-    @Req() req: Request,
-  ) {
+    // @Res() res: Response,
+    // @Req() req: Request,
+  ): Promise<IUser.ICreateResponse> {
     const { name, email, password } = request;
 
-    const user = await this.registerUserService.execute({
+    const result = await this.registerUserService.execute({
       email,
       name,
       password,
     });
 
-    const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${user.value}`;
-    console.log('RegisterUserController  =>', user.value, uri);
+    if (result.isLeft()) {
+      const error = result.value;
 
-    // if (response.isLeft()) {
-    //   const error = response.value;
-    //   switch (error.constructor) {
-    //     case NotFoundError:
-    //       throw new ConflictError(error.message);
-    //     default:
-    //       throw new BadRequestError(error.message);
-    //   }
-    // }
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          throw new ResourceNotFoundError(error.message);
+        case ConflictError:
+          throw new ConflictError(error.message);
+        default:
+          throw new BadRequestException(error.message);
+      }
+    }
 
+    // const uri = `${req.protocol}://${req.get('host')}${req.originalUrl}/${result.value.user.id.getValue()}`;
     // res.location(uri).send();
 
-    return right({ user });
+    return right({});
   }
 }

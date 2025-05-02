@@ -17,12 +17,16 @@ POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-  "name": "Kevin Cardoso",
-  "email": "kevin.c.lima@hotmail.com",
+  "name": "Kaike Cardoso",
+  "email": "kaike.c.lima@hotmail.com",
   "password": "262011"
 }
 
 ###
-DELETE  {{baseUrl}}/users/e5387273-6d0c-48ef-8389-8623926b4a09 HTTP/1.1
+DELETE  {{baseUrl}}/users/71c569f7-b437-4c64-9d20-2d3bd9217e11 HTTP/1.1
+Content-Type: application/json
+
+###
+GET  {{baseUrl}}/users/90c8a659-2be5-4322-baa0-56500dbd55c3 HTTP/1.1
 Content-Type: application/json
 

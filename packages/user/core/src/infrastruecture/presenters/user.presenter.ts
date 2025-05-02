@@ -1,13 +1,17 @@
+import { DateUtils, StringUtils } from '@shared/core'
 import { User } from '../../domain/entities'
 
 export class UserPresenter {
-  static toHTTP(entity: User) {
+  static toHTTP(entity: Partial<User>) {
     return {
-      id: entity,
-      name: entity.name,
-      email: entity.email,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
+      id: entity.id?.getValue(),
+      name: entity.name?.getValue(),
+      initials: StringUtils.getInitials(entity.name?.getValue() ?? ''),
+      email: entity.email?.getValue(),
+      // image: entity.image,
+      // paymentMethod: entity.paymentMethod,
+      createdAt: DateUtils.formatDate(entity.createdAt!),
+      // updatedAt: DateUtils.formatDate(entity.updatedAt!),
     }
   }
 }

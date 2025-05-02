@@ -3,6 +3,7 @@ import { HashGenerator } from '@shared/core';
 import {
   DeleteUserService,
   RegisterUserService,
+  FindByIdUserService,
   UserRepository,
 } from '@user/core';
 import { RegisterUserController } from '../infra/controllers/user/register-user.controller';
@@ -10,10 +11,15 @@ import { CryptoGraphyModule } from './cryptography.module';
 import { DatabaseModule } from './database.module';
 import { USER_REPOSITORY } from '../shared/constants/repositories.constants';
 import { DeleteUserController } from 'src/infra/controllers/user/delete-user.controller';
+import { FindByIdUserController } from '../infra/controllers/user/find-by-id-user.controller';
 
 @Module({
   imports: [DatabaseModule, CryptoGraphyModule], // Importando o DatabaseModule para ter acesso ao USER_REPOSITORY
-  controllers: [RegisterUserController, DeleteUserController],
+  controllers: [
+    FindByIdUserController,
+    RegisterUserController,
+    DeleteUserController,
+  ],
   providers: [
     {
       provide: RegisterUserService,
@@ -29,6 +35,13 @@ import { DeleteUserController } from 'src/infra/controllers/user/delete-user.con
       provide: DeleteUserService,
       useFactory: (userRepository: UserRepository) => {
         return new DeleteUserService(userRepository);
+      },
+      inject: [USER_REPOSITORY], // Usando o token USER_REPOSITORY
+    },
+    {
+      provide: FindByIdUserService,
+      useFactory: (userRepository: UserRepository) => {
+        return new FindByIdUserService(userRepository);
       },
       inject: [USER_REPOSITORY], // Usando o token USER_REPOSITORY
     },

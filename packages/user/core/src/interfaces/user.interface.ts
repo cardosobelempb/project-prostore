@@ -7,6 +7,8 @@ import {
   ResourceNotFoundError,
   UUIDVO,
 } from '@shared/core'
+import { UserPresenter } from '../infrastruecture'
+import { User } from '../domain'
 export namespace IUser {
   export enum IRoles {
     ADMIN = 'ADMIN',
@@ -18,7 +20,7 @@ export namespace IUser {
     id?: UUIDVO
     name: NameVO
     email: EmailVO
-    password: string
+    password?: string
     role?: IRoles
     emailVerified?: Date | null
     image?: string
@@ -51,10 +53,8 @@ export namespace IUser {
   }
 
   export type ICreateResponse = Either<
-    ConflictError,
-    {
-      user: IUser.IProps
-    }
+    ResourceNotFoundError | ConflictError,
+    {}
   >
 
   export interface IDeleteRequest {
@@ -65,4 +65,19 @@ export namespace IUser {
     ResourceNotFoundError | NotAllwedError,
     {}
   >
+
+  export interface IFindByIdRequest {
+    userId: string
+  }
+
+  export type IFindByIdResponse = Either<
+    ResourceNotFoundError | NotAllwedError,
+    {
+      user: User
+    }
+  >
+
+  export type IFindByIdPresenter = {
+    user: UserPresenter
+  }
 }

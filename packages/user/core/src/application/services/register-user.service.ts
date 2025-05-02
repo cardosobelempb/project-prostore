@@ -6,6 +6,7 @@ import {
   IService,
   left,
   NameVO,
+  ResourceNotFoundError,
   right,
 } from '@shared/core'
 import { User } from '../../domain/entities/user.entity'
@@ -55,10 +56,8 @@ export class RegisterUserService
       password: hashedPassword,
     })
 
-    console.log('RegisterUserService =>', entity)
+    await this.userRepository.create(entity)
 
-    const result = await this.userRepository.create(entity)
-
-    return right({ user: result })
+    return right({})
   }
 }

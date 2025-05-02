@@ -1,13 +1,13 @@
 import {
+  BadRequestException,
   Controller,
   Delete,
   HttpCode,
   HttpStatus,
   Param,
-  ParseUUIDPipe,
 } from '@nestjs/common';
 
-import { right, UUIDVO } from '@shared/core';
+import { BadRequestError, NotAllwedError, right } from '@shared/core';
 import { DeleteUserService, IUser } from '@user/core';
 
 @Controller('users')
@@ -21,7 +21,20 @@ export class DeleteUserController {
   ): Promise<IUser.IDeleteResponse> {
     console.log('DeleteUserController =>', userId);
 
-    await this.deleteUserService.execute({ userId });
+    const result = await this.deleteUserService.execute({ userId });
+
+    if (result.isLeft()) {
+      const error = result.value;
+
+      switch (error.constructor) {
+        case BadRequestException:
+          throw new BadRequestException(error.message);
+        case NotAllwedError:
+          throw new NotAllwedError(error.message);
+        default:
+          throw new BadRequestError(error.message);
+      }
+    }
 
     return right({});
   }

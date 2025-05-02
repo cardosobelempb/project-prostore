@@ -24,11 +24,13 @@ export class DeleteUserService
       return left(new ResourceNotFoundError('Resource not fond'))
     }
 
-    if (user.id.getValue() !== userId) {
+    if (!user.id.equals(new UUIDVO(userId))) {
       return left(new NotAllwedError('Not allowed'))
     }
 
     await this.userRepository.delete(user)
+
+    console.log(user)
 
     return right({})
   }
