@@ -1,5 +1,6 @@
-import { Entity, Optional, UUIDVO } from '@shared/core'
+import { EmailVO, Entity, Optional, PasswordVO, UUIDVO } from '@shared/core'
 import { IUser } from '../../interfaces'
+import { userFactory } from './user.factory'
 
 export class User extends Entity<IUser.IProps> {
   public get name() {

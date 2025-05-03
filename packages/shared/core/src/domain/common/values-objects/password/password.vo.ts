@@ -111,7 +111,7 @@ export class PasswordVO {
   }
 
   // Gera uma senha aleatória
-  static generatePassword(
+  public static generatePassword(
     length: number = 12,
     useUpperCase: boolean = true,
     useNumbers: boolean = true,
@@ -164,6 +164,16 @@ export class PasswordVO {
     }
 
     return this.hashed.compare(this.password, hash)
+  }
+
+  /**
+   * Verifica se uma string tem formato de hash bcrypt válido.
+   * @param hash A string a ser validada.
+   * @returns `true` se for um hash bcrypt válido.
+   */
+  public static isValidBcryptHash(hash: string): boolean {
+    const bcryptRegex = /^\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}$/
+    return typeof hash === 'string' && bcryptRegex.test(hash)
   }
 
   public getValue(): string {
