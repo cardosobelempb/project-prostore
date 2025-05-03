@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
-import { HashComparer, HashGenerator } from '@shared/core';
-import { BcryptHasher } from 'src/infra/cryptography/bcrypt-hasher';
+import { Hashed } from '@shared/core';
+import { BcryptHashed } from 'src/infrastruecture/cryptography/bcrypt-hashed';
 
 @Module({
-  providers: [
-    { provide: HashComparer, useClass: BcryptHasher },
-    { provide: HashGenerator, useClass: BcryptHasher },
-  ],
-  exports: [HashComparer, HashGenerator],
+  providers: [{ provide: Hashed, useClass: BcryptHashed }],
+  exports: [Hashed],
 })
-export class CryptoGraphyModule {}
+export class CryptographyModule {}

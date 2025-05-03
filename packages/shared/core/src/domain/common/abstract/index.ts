@@ -5,6 +5,7 @@ import { Repository } from './repository.abstract'
 import { AggregateRoot } from './aggregate-root.abstract'
 import { WatchedList } from './watched-list.abstract'
 import { MapperConverter } from './mapper-converter.abstract'
+import { Hashed } from './hash.abstract'
 
 export {
   Encrypter,
@@ -14,4 +15,5 @@ export {
   AggregateRoot,
   WatchedList,
   MapperConverter,
+  Hashed,
 }

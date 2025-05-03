@@ -1,36 +1,20 @@
 import { Module } from '@nestjs/common';
-import { HashGenerator } from '@shared/core';
 import {
   DeleteUserService,
-  RegisterUserService,
   FindByIdUserService,
   UserRepository,
 } from '@user/core';
-import { RegisterUserController } from '../infra/controllers/user/register-user.controller';
-import { CryptoGraphyModule } from './cryptography.module';
-import { DatabaseModule } from './database.module';
+import { DeleteUserController } from 'src/infrastruecture/controllers/user/delete-user.controller';
+import { FindByIdUserController } from '../infrastruecture/controllers/user/find-by-id-user.controller';
 import { USER_REPOSITORY } from '../shared/constants/repositories.constants';
-import { DeleteUserController } from 'src/infra/controllers/user/delete-user.controller';
-import { FindByIdUserController } from '../infra/controllers/user/find-by-id-user.controller';
+
+import { DatabaseModule } from './database.module';
+import { CryptographyModule } from './cryptography.module';
 
 @Module({
-  imports: [DatabaseModule, CryptoGraphyModule], // Importando o DatabaseModule para ter acesso ao USER_REPOSITORY
-  controllers: [
-    FindByIdUserController,
-    RegisterUserController,
-    DeleteUserController,
-  ],
+  imports: [DatabaseModule, CryptographyModule], // Importando o DatabaseModule para ter acesso ao USER_REPOSITORY
+  controllers: [FindByIdUserController, DeleteUserController],
   providers: [
-    {
-      provide: RegisterUserService,
-      useFactory: (
-        userRepository: UserRepository,
-        hashGenerator: HashGenerator,
-      ) => {
-        return new RegisterUserService(userRepository, hashGenerator);
-      },
-      inject: [USER_REPOSITORY, HashGenerator], // Usando o token USER_REPOSITORY
-    },
     {
       provide: DeleteUserService,
       useFactory: (userRepository: UserRepository) => {

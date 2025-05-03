@@ -1,5 +1,4 @@
-// import { BcryptHasher } from '../abstract/implementation/bacrypt-hashing' // Assumindo que você tem um BcryptHasher
-
+import { Hashed } from '../../abstract/hash.abstract'
 import { BadRequestError } from '../../errors'
 
 interface PasswordOptions {
@@ -12,10 +11,15 @@ interface PasswordOptions {
 }
 
 export class PasswordVO {
-  private readonly value: string
-  // private readonly bcrypt: BcryptHasher
+  private readonly password: string
 
-  constructor(password: string, options: PasswordOptions = {}) {
+  constructor(
+    password: string,
+    private readonly hashed?: Hashed,
+    private readonly options: PasswordOptions = {},
+  ) {
+    this.password = password
+
     const {
       minLength = 8,
       maxLength = 64,
@@ -23,7 +27,7 @@ export class PasswordVO {
       requireLowercase = true,
       requireDigit = true,
       requireSpecialChar = true,
-    } = options
+    } = this.options
 
     this.validate(password, {
       minLength,
@@ -33,9 +37,6 @@ export class PasswordVO {
       requireDigit,
       requireSpecialChar,
     })
-
-    this.value = password
-    // this.bcrypt = new BcryptHasher() // Criando instância do BcryptHasher
   }
 
   private validate(password: string, options: Required<PasswordOptions>): void {
@@ -90,28 +91,98 @@ export class PasswordVO {
     }
   }
 
-  // Método para gerar o hash da senha
-  // public async hashPassword(saltRounds: number = 10): Promise<string> {
-  //   const salt = await this.bcrypt.genSaltSync(saltRounds) // Gerando o salt
-  //   return this.bcrypt.hashSync(this.value, salt) // Gerando o hash da senha
-  // }
+  // ⚠️ Verifica se senha e confirmação são iguais
+  public static confirm(password: string, confirmPassword: string): void {
+    if (password !== confirmPassword) {
+      throw new BadRequestError('Password and confirmation do not match.')
+    }
+  }
 
-  // Método para verificar se a senha fornecida corresponde ao hash
-  // public async verifyPassword(
-  //   password: string,
-  //   hash: string,
-  // ): Promise<boolean> {
-  //   return this.bcrypt.compare(password, hash) // Comparando a senha com o hash fornecido
-  // }
+  // ✅ Verifica se a senha antiga bate com o hash salvo
+  public static async validateOldPassword(
+    oldPassword: string,
+    oldHash: string,
+    hasher: Hashed,
+  ): Promise<void> {
+    const match = await hasher.compare(oldPassword, oldHash)
+    if (!match) {
+      throw new BadRequestError('Old password is incorrect.')
+    }
+  }
 
-  // Método para validar se um hash é válido
-  // public async isValidHash(hash: string): Promise<boolean> {
-  //   // Verificar se o hash é válido comparando com o próprio hash gerado
-  //   const generatedHash = await this.hashPassword()
-  //   return this.bcrypt.compare(this.value, hash) // Comparando o hash gerado com o hash fornecido
-  // }
+  // Gera uma senha aleatória
+  static generatePassword(
+    length: number = 12,
+    useUpperCase: boolean = true,
+    useNumbers: boolean = true,
+    useSymbols: boolean = true,
+  ): string {
+    const lowerCase = 'abcdefghijklmnopqrstuvwxyz'
+    const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    const numbers = '0123456789'
+    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?'
+
+    let chars = lowerCase
+    if (useUpperCase) chars += upperCase
+    if (useNumbers) chars += numbers
+    if (useSymbols) chars += symbols
+
+    let password = ''
+    for (let i = 0; i < length; i++) {
+      const index = Math.floor(Math.random() * chars.length)
+      password += chars[index]
+    }
+
+    return password
+  }
+
+  public async hashPassword(saltRounds: number = 10): Promise<string> {
+    if (!this.hashed) {
+      throw new Error('Hasher not provided. Cannot hash password.')
+    }
+
+    // const salt = await this.hashed.salt(saltRounds)
+    return this.hashed.hash(this.password)
+  }
+
+  public async verifyPassword(
+    password: string,
+    hash: string,
+  ): Promise<boolean> {
+    if (!this.hashed) {
+      throw new BadRequestError('Hasher not provided. Cannot verify password.')
+    }
+
+    return this.hashed.compare(password, hash)
+  }
+
+  public async isValidHash(hash: string): Promise<boolean> {
+    if (!this.hashed) {
+      throw new BadRequestError(
+        'Hasher not provided. Cannot check hash validity.',
+      )
+    }
+
+    return this.hashed.compare(this.password, hash)
+  }
 
   public getValue(): string {
-    return this.value
+    return this.password
   }
 }
+
+/*
+const password = new PasswordVO('Example123!')
+console.log(password.hashPassword(12))
+const password = new PasswordVO('Example123!', new BcryptHasher())
+const hash = await password.hashPassword()
+
+const password = new PasswordVO(
+  'MySecureP@ss123',
+  new BcryptHasher(), // Supondo que implemente Hashed
+  {
+    minLength: 10,
+    requireSpecialChar: true,
+  },
+)
+  */

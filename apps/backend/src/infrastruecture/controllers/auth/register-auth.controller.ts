@@ -1,18 +1,16 @@
+import { RegisterAuthService } from '@auth/core';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import {
-  BadRequestException,
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
-
-import { ConflictError, ResourceNotFoundError, right } from '@shared/core';
-import { IUser, RegisterUserService } from '@user/core';
+  BadRequestError,
+  ConflictError,
+  ResourceNotFoundError,
+  right,
+} from '@shared/core';
+import { IUser } from '@user/core';
 
 @Controller('/register')
-export class RegisterUserController {
-  constructor(private readonly registerUserService: RegisterUserService) {}
+export class RegisterAuthController {
+  constructor(private readonly registerUserService: RegisterAuthService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -39,7 +37,7 @@ export class RegisterUserController {
         case ConflictError:
           throw new ConflictError(error.message);
         default:
-          throw new BadRequestException(error.message);
+          throw new BadRequestError(error.message);
       }
     }
 

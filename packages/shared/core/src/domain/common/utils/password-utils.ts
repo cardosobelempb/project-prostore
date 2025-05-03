@@ -1,7 +1,10 @@
-import { HashComparer } from '../abstract'
+import { HashComparer, HashGenerator } from '../abstract'
 
 export class PasswordUtils {
-  constructor(private hasher: HashComparer) {}
+  constructor(
+    private readonly hashComparer: HashComparer,
+    private readonly hashGenerator: HashGenerator,
+  ) {}
   // Gera uma senha aleatória
   static generatePassword(
     length: number = 12,
@@ -59,10 +62,10 @@ export class PasswordUtils {
   }
 
   async hash(password: string): Promise<string> {
-    return this.hash(password)
+    return this.hashGenerator.hash(password)
   }
 
   async compare(password: string, hashed: string): Promise<boolean> {
-    return this.compare(password, hashed)
+    return this.hashComparer.compare(password, hashed)
   }
 }
