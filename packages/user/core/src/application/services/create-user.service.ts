@@ -8,9 +8,11 @@ import {
   PasswordVO,
   right,
 } from '@shared/core'
-import { IUser, User, UserRepository } from '@user/core'
+import { IUser } from '../../interfaces'
+import { UserRepository } from '../../infrastruecture'
+import { User } from '../../domain'
 
-export class RegisterAuthService
+export class CreateUserService
   implements IService<IUser.ICreateRequest, IUser.ICreateResponse>
 {
   constructor(
@@ -34,11 +36,6 @@ export class RegisterAuthService
 
     // Agora, gera o hash da senha
     const hashedPassword = await this.hashed.hash(passwordVO.getValue())
-
-    // const validBcryptHash = PasswordVO.isValidBcryptHash(hashedPassword)
-    // if (!validBcryptHash) {
-    //   return left(new BadRequestError('hash bcrypt válid'))
-    // }
 
     // Criação da entidade do usuário com o password já com hash
     const entity = User.create({

@@ -1,3 +1,3 @@
-export interface IService<IN, OUT> {
-  execute(input: IN): Promise<OUT | null>;
+export interface IService<Request, Response> {
+  execute(request: Request): Promise<Response | null>
 }
