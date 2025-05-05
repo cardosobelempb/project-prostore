@@ -1,6 +1,6 @@
 import { BadRequestError } from '../../errors'
 
-export class DateVO {
+export class DATEVO {
   private readonly value: Date
 
   constructor(dateString: string) {

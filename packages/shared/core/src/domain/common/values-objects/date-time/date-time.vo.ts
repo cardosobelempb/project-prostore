@@ -1,13 +1,13 @@
-import { DateVO } from './date.vo'
-import { TimeVO } from './time.vo'
+import { DATEVO } from './date.vo'
+import { TIMEVO } from './time.vo'
 
 export class DateTimeVO {
-  private readonly dateVO: DateVO
-  private readonly timeVO: TimeVO
+  private readonly dateVO: DATEVO
+  private readonly timeVO: TIMEVO
 
   constructor(date: string, time: string) {
-    this.dateVO = new DateVO(date)
-    this.timeVO = new TimeVO(time)
+    this.dateVO = new DATEVO(date)
+    this.timeVO = new TIMEVO(time)
   }
 
   public getISO(): string {

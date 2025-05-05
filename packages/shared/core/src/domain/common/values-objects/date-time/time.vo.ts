@@ -1,6 +1,6 @@
 import { BadRequestError } from '../../errors'
 
-export class TimeVO {
+export class TIMEVO {
   private readonly value: string
 
   constructor(time: string) {

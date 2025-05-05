@@ -1,0 +1,8 @@
+{
+  "name": {
+    "empty": "Name cannot be empty.",
+    "tooShort": "Name must be at least {{min}} characters.",
+    "tooLong": "Name must be at most {{max}} characters.",
+    "invalidChars": "Name can only contain letters, spaces, apostrophes, and hyphens."
+  }
+}
