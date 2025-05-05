@@ -70,3 +70,7 @@ export class NameVO {
     }
   }
 }
+
+/*
+Quero um prompt para fazer uma sequência de stories no Instagram para quebrar objeções da minha audiência para divulgar minha marca e meu site chamado surb - servicos urbanos , sou desemvolvedor especializada em frontend e backend a e quero mostrar que eu domino o assunto e que a falta de desemvolvedor é um mito
+*/
