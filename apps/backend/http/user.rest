@@ -27,6 +27,6 @@ DELETE  {{baseUrl}}/users/71c569f7-b437-4c64-9d20-2d3bd9217e11 HTTP/1.1
 Content-Type: application/json
 
 ###
-GET  {{baseUrl}}/users/8545971b-e7cf-4fac-be47-41582ba3f33a HTTP/1.1
+GET  {{baseUrl}}/users/3db7f2f5-aed5-4430-b701-a3e562779d8e HTTP/1.1
 Content-Type: application/json
 

@@ -1,6 +1,19 @@
-import { EmailVO, Entity, Optional, PasswordVO, UUIDVO } from '@shared/core'
+import {
+  EmailVO,
+  Entity,
+  NameVO,
+  Optional,
+  PasswordVO,
+  UUIDVO,
+} from '@shared/core'
 import { IUser } from '../../interfaces'
-import { userFactory } from './user.factory'
+
+interface UserProps {
+  id: string
+  name: string
+  email: string
+  password: string
+}
 
 export class User extends Entity<IUser.IProps> {
   public get name() {
@@ -45,19 +58,33 @@ export class User extends Entity<IUser.IProps> {
 
     return user
   }
+
+  clone(override: Partial<IUser.IProps> = {}, id?: UUIDVO) {
+    const user = User.create(
+      {
+        ...this.props,
+        ...override,
+      },
+      id,
+    )
+
+    return user
+  }
 }
 
 /*
 const user = User.create({
-  name: new PersonName("John Doe"),
-  email: new Email("john@email.com"),
-  password: new HashPassword(
-    "$2a$12$NENYP8wjCQiqplaziztZuenYH4yPM68J8Faid3frC5.1QurJZ0mJO"
+  name: new NameVO('John Doe'),
+  email: new EmailVO('john@email.com'),
+  password: new PasswordVO(
+    '$2a$12$NENYP8wjCQiqplaziztZuenYH4yPM68J8Faid3frC5.1QurJZ0mJO',
   ),
   createdAt: new Date(),
   role: IUser.IRoles.CLIENT,
-});
+})
 
-console.log(user);
-console.log(user.name.value);
+const alter = user.clone({ name: new NameVO('Cláudio Cardoso') })
+console.log(user)
+console.log(user.name.getValue())
+console.log(alter.name.getValue())
 */
