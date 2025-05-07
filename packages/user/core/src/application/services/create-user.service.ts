@@ -39,9 +39,9 @@ export class CreateUserService
 
     // Criação da entidade do usuário com o password já com hash
     const entity = User.create({
-      name: nameVO,
-      email: emailVO,
-      password: new PasswordVO(hashedPassword), // Aqui passamos o password com o hash
+      name: nameVO.getValue(),
+      email: emailVO.getValue(),
+      password: hashedPassword, // Aqui passamos o password com o hash
     })
 
     // Salva o usuário no banco de dados

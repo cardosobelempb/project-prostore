@@ -6,15 +6,6 @@ interface NameOptions {
   maxLength?: number
 }
 
-const i18nMock: I18nContext = {
-  t: (key, options) => {
-    if (key === 'errors.name.tooShort') {
-      return `Name must be at least ${options?.args?.min} characters.`
-    }
-    return key // fallback: retorna a chave original
-  },
-}
-
 export class NameVO {
   private readonly value: string
 
@@ -22,8 +13,8 @@ export class NameVO {
     const min = options.minLength ?? 2
     const max = options.maxLength ?? 50
 
-    const cleaned = name.trim().replace(/\s+/g, ' ')
-    NameVO.validate(cleaned, min, max, i18n)
+    const cleaned = NameVO.normalize(name)
+    NameVO.assertIsValid(cleaned, min, max, i18n)
     this.value = cleaned
   }
 
@@ -35,42 +26,56 @@ export class NameVO {
     return this.value === other.getValue()
   }
 
-  public static validate(
+  private static normalize(name: string): string {
+    return name.trim().replace(/\s+/g, ' ')
+  }
+
+  private static assertIsValid(
     name: string,
     min: number,
     max: number,
     i18n?: I18nContext,
   ): void {
+    const t =
+      i18n?.t ?? ((key: string, o?: any) => NameVO.defaultMessages(key, o))
+
     if (!name || name.trim().length === 0) {
-      throw new BadRequestError(
-        i18n?.t('errors.name.empty') ?? 'Name cannot be empty.',
-      )
+      throw new BadRequestError(t('errors.name.empty'))
     }
 
     if (name.length < min) {
-      throw new BadRequestError(
-        i18n?.t('errors.name.tooShort', { args: { min } }) ??
-          `Name must be at least ${min} characters.`,
-      )
+      throw new BadRequestError(t('errors.name.tooShort', { args: { min } }))
     }
 
     if (name.length > max) {
-      throw new BadRequestError(
-        i18n?.t('errors.name.tooLong', { args: { max } }) ??
-          `Name must be at most ${max} characters.`,
-      )
+      throw new BadRequestError(t('errors.name.tooLong', { args: { max } }))
+    }
+
+    const parts = name.split(' ')
+    if (parts.length < 2) {
+      throw new BadRequestError(t('errors.name.surnameMissing'))
     }
 
     const nameRegex = /^[\p{L}\s'-]+$/u
     if (!nameRegex.test(name)) {
-      throw new BadRequestError(
-        i18n?.t('errors.name.invalidChars') ??
-          'Name can only contain letters, spaces, apostrophes, and hyphens.',
-      )
+      throw new BadRequestError(t('errors.name.invalidChars'))
     }
   }
-}
 
-/*
-Quero um prompt para fazer uma sequência de stories no Instagram para quebrar objeções da minha audiência para divulgar minha marca e meu site chamado surb - servicos urbanos , sou desemvolvedor especializada em frontend e backend a e quero mostrar que eu domino o assunto e que a falta de desemvolvedor é um mito
-*/
+  private static defaultMessages(
+    key: string,
+    options?: { args?: Record<string, any> },
+  ): string {
+    const args = options?.args ?? {}
+    const messages: Record<string, string> = {
+      'errors.name.empty': 'Name cannot be empty.',
+      'errors.name.tooShort': `Name must be at least ${args.min} characters.`,
+      'errors.name.tooLong': `Name must be at most ${args.max} characters.`,
+      'errors.name.surnameMissing': 'Surname is required.',
+      'errors.name.invalidChars':
+        'Name can only contain letters, spaces, apostrophes, and hyphens.',
+    }
+
+    return messages[key] ?? key
+  }
+}

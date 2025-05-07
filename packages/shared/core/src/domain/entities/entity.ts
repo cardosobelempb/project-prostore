@@ -2,7 +2,7 @@ import { UUIDVO } from '../common'
 
 export abstract class Entity<Props> {
   private _id: UUIDVO
-  protected props: Props
+  readonly props: Props
 
   protected constructor(props: Props, id?: UUIDVO) {
     this.props = props

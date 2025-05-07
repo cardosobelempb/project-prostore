@@ -5,7 +5,7 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class BcryptHashed implements Hashed {
-  private static readonly HASH_SALT_ROUNDS = 10;
+  private static readonly HASH_SALT_ROUNDS = 12;
 
   async hash(plain: string): Promise<string> {
     return await bcrypt.hash(plain, BcryptHashed.HASH_SALT_ROUNDS);

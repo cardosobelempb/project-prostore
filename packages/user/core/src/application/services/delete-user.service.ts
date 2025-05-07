@@ -15,10 +15,7 @@ export class DeleteUserService
   constructor(private readonly userRepository: UserRepository) {}
   async execute(input: IUser.IDeleteRequest): Promise<IUser.IDeleteResponse> {
     const { userId } = input
-    console.log('DeleteUserService', userId)
-
     const user = await this.userRepository.findById(userId)
-    console.log('User =>', user)
 
     if (!user) {
       return left(new ResourceNotFoundError('Resource not fond'))
@@ -29,8 +26,6 @@ export class DeleteUserService
     }
 
     await this.userRepository.delete(user)
-
-    console.log(user)
 
     return right({})
   }

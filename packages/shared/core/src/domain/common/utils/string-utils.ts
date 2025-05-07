@@ -1,23 +1,28 @@
 export class StringUtils {
   private constructor() {}
 
+  // Verifica se a string é nula, indefinida ou vazia após trim
   static isBlank(value: string | null | undefined): boolean {
     return !value || value.trim().length === 0
   }
 
+  // Retorna o inverso de isBlank
   static isNotBlank(value: string | null | undefined): boolean {
     return !this.isBlank(value)
   }
 
-  static capitalize(value: string): string {
-    if (this.isBlank(value)) return value
-    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+  // Capitaliza a primeira letra da string
+  static capitalize(value: string | null | undefined): string | undefined {
+    if (this.isBlank(value)) return value ?? undefined
+    return value!.charAt(0).toUpperCase() + value!.slice(1).toLowerCase()
   }
 
+  // Remove acentos da string
   static removeAccents(value: string): string {
     return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   }
 
+  // Converte a string em slug (ex: "Olá Mundo" -> "ola-mundo")
   static toSlug(value: string): string {
     return this.removeAccents(value)
       .toLowerCase()
@@ -27,25 +32,31 @@ export class StringUtils {
       .replace(/-+/g, '-')
   }
 
+  // Limita a string a um tamanho máximo e adiciona "..."
   static truncate(value: string, maxLength: number): string {
     if (!value || value.length <= maxLength) return value
     return value.substring(0, maxLength).trimEnd() + '...'
   }
 
+  // Conta quantas vezes uma substring aparece em um texto
   static countOccurrences(text: string, search: string): number {
     if (this.isBlank(text) || this.isBlank(search)) return 0
-    return (text.match(new RegExp(search, 'g')) || []).length
+    const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    return (text.match(new RegExp(escaped, 'g')) || []).length
   }
 
+  // Inverte a string
   static reverse(value: string): string {
     return value.split('').reverse().join('')
   }
 
+  // Valida e-mail usando regex básica
   static isValidEmail(email: string): boolean {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return regex.test(email)
   }
 
+  // Verifica se uma URL é válida
   static isValidURL(url: string): boolean {
     try {
       new URL(url)
@@ -55,6 +66,7 @@ export class StringUtils {
     }
   }
 
+  // Valida CPF com base nos dígitos verificadores
   static isValidCPF(cpf: string): boolean {
     cpf = cpf.replace(/[^\d]+/g, '')
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false
@@ -73,15 +85,13 @@ export class StringUtils {
     return rest === +cpf.charAt(10)
   }
 
+  // Valida CNPJ com base nos dígitos verificadores
   static isValidCNPJ(cnpj: string): boolean {
     cnpj = cnpj.replace(/[^\d]+/g, '')
     if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) return false
 
     const calcCheckDigit = (base: string, factors: number[]) =>
-      factors.reduce(
-        (sum, factor, index) => sum + +base.charAt(index) * factor,
-        0,
-      )
+      factors.reduce((sum, factor, i) => sum + +base.charAt(i) * factor, 0)
 
     const base = cnpj.slice(0, 12)
     const digit1 =
@@ -96,6 +106,7 @@ export class StringUtils {
     return cnpj.endsWith(`${check1}${check2}`)
   }
 
+  // Converte para camelCase
   static toCamelCase(value: string): string {
     return value
       .replace(/[-_]+/g, ' ')
@@ -105,20 +116,25 @@ export class StringUtils {
       .replace(/\s+/g, '')
   }
 
+  // Converte para snake_case
   static toSnakeCase(value: string): string {
     return value
       .replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
       .replace(/[\s\-]+/g, '_')
+      .replace(/__+/g, '_')
       .toLowerCase()
   }
 
+  // Converte para kebab-case
   static toKebabCase(value: string): string {
     return value
       .replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
       .replace(/[\s_]+/g, '-')
+      .replace(/--+/g, '-')
       .toLowerCase()
   }
 
+  // Gera string aleatória básica
   static generateRandomString(length: number = 10): string {
     const chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -129,11 +145,27 @@ export class StringUtils {
     return result
   }
 
+  // Gera string aleatória segura com crypto
+  static generateSecureRandomString(length: number = 10): string {
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const array = new Uint8Array(length)
+    crypto.getRandomValues(array)
+    return Array.from(array, byte => chars[byte % chars.length]).join('')
+  }
+
+  // Retorna as iniciais de um nome
   static getInitials(name: string): string {
     return name
-      .trim() // Remove espaços extras nas extremidades
-      .split(/\s+/) // Divide por qualquer espaço em branco
-      .map(word => word[0]?.toUpperCase()) // Pega a primeira letra de cada palavra, em minúsculo
-      .join('') // Junta as letras
+      .trim()
+      .split(/\s+/)
+      .map(word => word[0]?.toUpperCase())
+      .join('')
   }
 }
+
+const str = 'cláudio Cardoso'
+const str1 = StringUtils.isBlank('')
+const str2 = StringUtils.capitalize(str)
+console.log(str1)
+console.log(str2)

@@ -6,10 +6,10 @@ export class UserPrismaMapper {
   static toDomain(raw: UserMapper): User {
     return User.create(
       {
-        id: new UUIDVO(raw.id),
-        name: new NameVO(raw.name),
-        email: new EmailVO(raw.email),
-        password: raw.password ? new PasswordVO(raw.password) : undefined,
+        id: raw.id,
+        name: raw.name,
+        email: raw.email,
+        password: raw.password,
         image: raw.image,
         paymentMethod: raw.paymentMethod,
         role: raw.role as IUser.IRoles,
@@ -26,12 +26,12 @@ export class UserPrismaMapper {
       id: entity.id.getValue(),
       name: entity.name.getValue(),
       email: entity.email.getValue(),
-      password: entity.password ? entity.password.getValue() : undefined,
-      image: entity.image,
-      paymentMethod: entity.paymentMethod,
-      emailVerified: entity.emailVerified,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
+      password: entity.password.getValue(),
+      image: entity.image(),
+      paymentMethod: entity.paymentMethod(),
+      emailVerified: entity.emailVerified(),
+      createdAt: entity.createdAt(),
+      updatedAt: entity.updatedAt(),
     };
   }
 }

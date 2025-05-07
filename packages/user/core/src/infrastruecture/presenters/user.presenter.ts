@@ -8,9 +8,11 @@ export class UserPresenter {
       name: entity.name?.getValue(),
       initials: StringUtils.getInitials(entity.name?.getValue() ?? ''),
       email: entity.email?.getValue(),
-      // image: entity.image,
+      // image: entity.getImage ? entity.getImage() : undefined,
       // paymentMethod: entity.paymentMethod,
-      createdAt: DateUtils.formatDate(entity.createdAt!),
+      createdAt: DateUtils.formatDate(
+        entity.createdAt ? entity.createdAt() : new Date(),
+      ),
       // updatedAt: DateUtils.formatDate(entity.updatedAt!),
     }
   }

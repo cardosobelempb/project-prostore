@@ -1,6 +1,6 @@
 import { BadRequestError } from '../../errors'
 
-interface NameOptions {
+interface PhoneValidationOptions {
   minLength?: number
   maxLength?: number
 }
@@ -8,33 +8,27 @@ interface NameOptions {
 export class PhoneVO {
   private readonly value: string
 
-  constructor(phone: string, options: NameOptions = {}) {
+  constructor(phone: string, options: PhoneValidationOptions = {}) {
     const cleaned = PhoneVO.clean(phone)
 
     if (!PhoneVO.isValid(cleaned)) {
-      throw new BadRequestError(`Telefone inválido: ${phone}`)
+      throw new BadRequestError(`Telefone inválido: ${cleaned}`)
     }
 
-    const min = options.minLength ?? 11
-    const max = options.maxLength ?? 20
+    const min = options.minLength ?? 10
+    const max = options.maxLength ?? 11
 
-    this.validate(phone, min, max)
-    this.value = phone
-
+    this.validate(cleaned, min, max)
     this.value = cleaned
   }
 
-  private validate(phone: string, min: number, max: number): void {
-    if (!phone || phone.trim().length === 0) {
-      throw new BadRequestError('Phone cannot be empty.')
+  private validate(cleanedPhone: string, min: number, max: number): void {
+    if (cleanedPhone.length < min) {
+      throw new BadRequestError(`Telefone deve ter ao menos ${min} dígitos.`)
     }
 
-    if (phone.length < min) {
-      throw new BadRequestError(`Phone must be at least ${min} characters.`)
-    }
-
-    if (phone.length > max) {
-      throw new BadRequestError(`Phone must be at most ${max} characters.`)
+    if (cleanedPhone.length > max) {
+      throw new BadRequestError(`Telefone deve ter no máximo ${max} dígitos.`)
     }
   }
 
@@ -47,38 +41,31 @@ export class PhoneVO {
   }
 
   public format(): string {
-    const digits = this.value
-
-    const ddd = digits.slice(0, 2)
-    const isMobile = digits.length === 11 // 9 dígitos + DDD
-    const firstPart = isMobile ? digits.slice(2, 7) : digits.slice(2, 6)
-    const secondPart = isMobile ? digits.slice(7) : digits.slice(6)
+    const ddd = this.value.slice(0, 2)
+    const isMobile = this.value.length === 11
+    const firstPart = isMobile ? this.value.slice(2, 7) : this.value.slice(2, 6)
+    const secondPart = isMobile ? this.value.slice(7) : this.value.slice(6)
 
     return `(${ddd}) ${firstPart}-${secondPart}`
   }
 
   public static isValid(phone: string): boolean {
     const cleaned = this.clean(phone)
-
-    // Aceita apenas números com DDD (2) + número (8 ou 9 dígitos)
     if (!/^\d{10,11}$/.test(cleaned)) return false
 
     const ddd = cleaned.slice(0, 2)
     const number = cleaned.slice(2)
 
-    // Opcional: rejeita DDDs inválidos (lista parcial)
-    if (!['11', '21', '31', '41', '51', '61', '71', '81', '91'].includes(ddd)) {
-      return false
-    }
+    const validDDDs = ['11', '21', '31', '41', '51', '61', '71', '81', '91']
+    if (!validDDDs.includes(ddd)) return false
 
-    // Valida número fixo ou celular
-    if (number.length === 9 && number[0] !== '9') return false // celular deve começar com 9
+    if (number.length === 9 && number[0] !== '9') return false
     if (
       number.length === 8 &&
       number[0] &&
       !['2', '3', '4', '5'].includes(number[0])
     )
-      return false // fixo
+      return false
 
     return true
   }

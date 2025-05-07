@@ -2,12 +2,8 @@ import {
   BadRequestError,
   ConflictError,
   Either,
-  EmailVO,
-  NameVO,
   NotAllwedError,
-  PasswordVO,
   ResourceNotFoundError,
-  UUIDVO,
 } from '@shared/core'
 import { User } from '../domain'
 import { UserPresenter } from '../infrastruecture'
@@ -19,10 +15,10 @@ export namespace IUser {
   }
 
   export interface IProps {
-    id?: UUIDVO
-    name: NameVO
-    email: EmailVO
-    password?: PasswordVO
+    id?: string
+    name: string
+    email: string
+    password?: string
     role?: IRoles
     emailVerified?: Date | null
     image?: string
@@ -31,6 +27,20 @@ export namespace IUser {
     createdAt: Date
     updatedAt?: Date | null
   }
+
+  // export interface IProps {
+  //   id?: UUIDVO
+  //   name: NameVO
+  //   email: EmailVO
+  //   password?: PasswordVO
+  //   role?: IRoles
+  //   emailVerified?: Date | null
+  //   image?: string
+  //   address?: string
+  //   paymentMethod?: string
+  //   createdAt: Date
+  //   updatedAt?: Date | null
+  // }
 
   export interface ICreateUser extends IProps {
     confirmPassword: string
