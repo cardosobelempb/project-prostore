@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import CredentialsSignInForm from '@/components/credentials-sign-in-form/credentials-sign-in-form'
 import {
   Card,
   CardContent,
@@ -11,12 +10,13 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { APP_NAME } from '@/lib/constants'
+import CredentialsSignOutForm from '@/components/credentials-sign-out-form/credentials-sign-out-form'
 
 export const metadata: Metadata = {
-  title: 'Sign In',
+  title: 'Sign Out',
 }
 
-const SignInPage = () => {
+const SignUpPage = () => {
   return (
     <div className="w-full max-w-md mx-auto">
       <Card>
@@ -31,10 +31,10 @@ const SignInPage = () => {
               alt={`${APP_NAME} logo`}
             />
           </Link>
-          <CardTitle className="text-center">Sign In</CardTitle>
+          <CardTitle className="text-center">Sign Out</CardTitle>
           <CardDescription className="text-center">
-            Select a method to sign in to your account
-            <CredentialsSignInForm />
+            Select a method to sign out to your account
+            <CredentialsSignOutForm />
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4"></CardContent>
@@ -43,4 +43,4 @@ const SignInPage = () => {
   )
 }
 
-export default SignInPage
+export default SignUpPage
