@@ -1,6 +1,4 @@
 export * from './controllers'
 export * from './graphql'
 export * from './views'
-
-import { Optional } from './optional'
-export type { Optional }
+export * from './i18n'

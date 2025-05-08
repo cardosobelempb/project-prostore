@@ -1,4 +1,4 @@
-export const messages = {
+export const validNames = {
   en: {
     NAME_EMPTY: 'Name cannot be empty.',
     NAME_TOO_SHORT: 'Name must be at least {min} characters.',

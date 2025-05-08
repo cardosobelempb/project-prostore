@@ -1,3 +1,3 @@
-export interface I18nContext {
+export interface I18n {
   t(key: string, options?: { args?: Record<string, any> }): string
 }

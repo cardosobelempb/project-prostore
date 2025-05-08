@@ -1,5 +1,6 @@
+import { I18n } from '../../../../interfaces'
+import { I18nAbstract } from '../../abstract'
 import { BadRequestError } from '../../errors'
-import { I18nContext } from './i18n-context/i18n-context'
 
 interface NameOptions {
   minLength?: number
@@ -9,37 +10,40 @@ interface NameOptions {
 export class NameVO {
   private readonly value: string
 
-  constructor(name: string, options: NameOptions = {}, i18n?: I18nContext) {
+  constructor(name: string, options: NameOptions = {}, i18n?: I18nAbstract) {
     const min = options.minLength ?? 2
     const max = options.maxLength ?? 50
 
-    const cleaned = NameVO.normalize(name)
-    NameVO.assertIsValid(cleaned, min, max, i18n)
-    this.value = cleaned
+    const normalizedName = NameVO.normalize(name)
+    NameVO.validate(normalizedName, min, max, i18n)
+    this.value = normalizedName
   }
 
+  // Retorna o valor do nome
   public getValue(): string {
     return this.value
   }
 
+  // Compara com outro NameVO
   public equals(other: NameVO): boolean {
     return this.value === other.getValue()
   }
 
+  // Remove espaços duplicados e trim
   private static normalize(name: string): string {
     return name.trim().replace(/\s+/g, ' ')
   }
 
-  private static assertIsValid(
+  // Valida o nome
+  private static validate(
     name: string,
     min: number,
     max: number,
-    i18n?: I18nContext,
+    i18n?: I18n,
   ): void {
-    const t =
-      i18n?.t ?? ((key: string, o?: any) => NameVO.defaultMessages(key, o))
+    const t = i18n?.t.bind(i18n) ?? NameVO.defaultMessages
 
-    if (!name || name.trim().length === 0) {
+    if (!name) {
       throw new BadRequestError(t('errors.name.empty'))
     }
 
@@ -51,8 +55,8 @@ export class NameVO {
       throw new BadRequestError(t('errors.name.tooLong', { args: { max } }))
     }
 
-    const parts = name.split(' ')
-    if (parts.length < 2) {
+    const nameParts = name.split(' ')
+    if (nameParts.length < 2) {
       throw new BadRequestError(t('errors.name.surnameMissing'))
     }
 
@@ -62,20 +66,39 @@ export class NameVO {
     }
   }
 
+  // Mensagens de fallback (quando não há i18n)
   private static defaultMessages(
     key: string,
     options?: { args?: Record<string, any> },
   ): string {
     const args = options?.args ?? {}
-    const messages: Record<string, string> = {
-      'errors.name.empty': 'Name cannot be empty.',
-      'errors.name.tooShort': `Name must be at least ${args.min} characters.`,
-      'errors.name.tooLong': `Name must be at most ${args.max} characters.`,
-      'errors.name.surnameMissing': 'Surname is required.',
-      'errors.name.invalidChars':
-        'Name can only contain letters, spaces, apostrophes, and hyphens.',
+
+    const messages: Record<string, Record<string, string>> = {
+      'errors.name.empty': {
+        en: 'Name cannot be empty.',
+        pt: 'O nome não pode estar vazio.',
+      },
+      'errors.name.tooShort': {
+        en: 'Name must be at least {min} characters.',
+        pt: 'O nome deve ter pelo menos {min} caracteres.',
+      },
+      'errors.name.tooLong': {
+        en: 'Name must be at most {max} characters.',
+        pt: 'O nome deve ter no máximo {max} caracteres.',
+      },
+      'errors.name.surnameMissing': {
+        en: 'Surname is required.',
+        pt: 'Sobrenome é obrigatório.',
+      },
+      'errors.name.invalidChars': {
+        en: 'Only letters, spaces, apostrophes, and hyphens are allowed.',
+        pt: 'Apenas letras, espaços, apóstrofos e hífens são permitidos.',
+      },
     }
 
-    return messages[key] ?? key
+    const lang = 'pt' // ou detectar dinamicamente de algum lugar
+    const template = messages[key]?.[lang] ?? key
+
+    return template.replace(/\{(\w+)\}/g, (_, k) => args[k] ?? `{${k}}`)
   }
 }

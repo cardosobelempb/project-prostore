@@ -164,8 +164,10 @@ export class StringUtils {
   }
 }
 
+/*
 const str = 'cláudio Cardoso'
 const str1 = StringUtils.isBlank('')
 const str2 = StringUtils.capitalize(str)
 console.log(str1)
 console.log(str2)
+*/
