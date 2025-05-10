@@ -1,3 +1,3 @@
-export * from "./entities";
-export * from "./services";
-export * from "./validation";
+export * from './domain'
+export * from './application'
+export * from './infrastruecture'

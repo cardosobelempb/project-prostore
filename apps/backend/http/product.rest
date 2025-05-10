@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:4000/api/v1
+@authToken = {{login.response.headers.X-AuthToken}}
+
+# @name login
+
+###
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+# USERS
+### REGISTER
+
+POST {{baseUrl}}/products
+# Authorization: Bearer xxx
+Content-Type: application/json
+
+{
+  "name": "Kaike Cardoso",
+  "email": "kaike.c.lima@hotmail.com",
+  "password": "26201145Ac@"
+}
+
+###
+DELETE  {{baseUrl}}/products/4db67bcf-6904-4aaa-b4be-30dcd6a6558c HTTP/1.1
+Content-Type: application/json
+
+###
+GET  {{baseUrl}}/products/7cd94cd2-f6cd-4c80-8e51-a0257a1a480f HTTP/1.1
+Content-Type: application/json
+
+###
+GET  {{baseUrl}}/products HTTP/1.1
+Content-Type: application/json
+

@@ -1,5 +1,5 @@
 import { IProduct } from '@product/core';
-export const products: IProduct.IPROPS[] = [
+export const products: IProduct.IProps[] = [
   {
     name: 'Polo Sporting Stretch Shirt',
     slug: 'polo-sporting-stretch-shirt',

@@ -5,6 +5,7 @@ import { AppController } from 'src/infrastruecture/controllers/app/app.controlle
 import { EnvModule } from './env.module';
 import { UserModule } from './user.module';
 import { AuthModule } from './auth.module';
+import { ProductModule } from './product.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthModule } from './auth.module';
     EnvModule,
     AuthModule,
     UserModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [],
